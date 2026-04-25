@@ -17,27 +17,14 @@
         }
 
         :root {
+            --bg-dark: #0f0f0f;
+            --bg-darker: #1a1a1a;
             --charcoal: #2c2c2c;
-            --dark-grey: #4a4a4a;
-            --mid-grey: #6a6a6a;
-            --light-grey: #9a9a9a;
-            --soft-grey: #e8e8e8;
-            --warm-white: #fafaf8;
-            --white: #ffffff;
-            --accent-warm: #8b7355;
-            --accent-light: #c4a27a;
-        }
-
-        [data-theme="dark"] {
-            --charcoal: #fafaf8;
-            --dark-grey: #d0d0d0;
-            --mid-grey: #a0a0a0;
-            --light-grey: #707070;
-            --soft-grey: #2a2a2a;
-            --warm-white: #1a1a1a;
-            --white: #0f0f0f;
-            --accent-warm: #c4a27a;
-            --accent-light: #8b7355;
+            --warm-white: #f5f5f0;
+            --off-white: #e8e8e3;
+            --accent: #8b9b7a;
+            --accent-bright: #a5b895;
+            --gold: #d4a574;
         }
 
         html {
@@ -46,17 +33,65 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--warm-white);
-            color: var(--charcoal);
+            background: var(--bg-dark);
+            color: var(--warm-white);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(139, 155, 122, 0.3);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
         }
 
         /* Container */
@@ -74,18 +109,15 @@
             right: 0;
             z-index: 1000;
             background: transparent;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 1.5rem 0;
         }
 
         nav.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             padding: 1rem 0;
-        }
-
-        [data-theme="dark"] nav.scrolled {
-            background: rgba(15, 15, 15, 0.98);
         }
 
         .nav-container {
@@ -99,9 +131,10 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--warm-white);
+            text-shadow: 0 0 20px rgba(139, 155, 122, 0.3);
         }
 
         .nav-links {
@@ -112,35 +145,54 @@
         }
 
         .nav-links a {
-            color: var(--dark-grey);
+            color: var(--off-white);
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--accent);
         }
 
         .nav-links a:hover {
-            color: var(--accent-warm);
+            color: var(--accent-bright);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .theme-toggle {
-            background: none;
-            border: 1.5px solid var(--soft-grey);
+            background: rgba(139, 155, 122, 0.2);
+            border: 1.5px solid var(--accent);
             width: 40px;
             height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            color: var(--charcoal);
+            color: var(--warm-white);
             font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(139, 155, 122, 0.3);
         }
 
         .theme-toggle:hover {
-            border-color: var(--accent-warm);
-            color: var(--accent-warm);
+            background: var(--accent);
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 0 0 30px rgba(139, 155, 122, 0.6);
         }
 
         .menu-toggle {
@@ -155,7 +207,7 @@
         .menu-toggle span {
             width: 25px;
             height: 2px;
-            background: var(--charcoal);
+            background: var(--warm-white);
             transition: all 0.3s ease;
         }
 
@@ -165,6 +217,7 @@
             display: flex;
             align-items: center;
             padding-top: 80px;
+            position: relative;
         }
 
         .hero-container {
@@ -173,31 +226,48 @@
             padding: 0 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 5rem;
             align-items: center;
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-content h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 600;
-            line-height: 1.1;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1;
             margin-bottom: 1.5rem;
-            color: var(--charcoal);
+            background: linear-gradient(135deg, var(--warm-white) 0%, var(--accent-bright) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--dark-grey);
+            font-size: 1.4rem;
+            color: var(--accent-bright);
             margin-bottom: 1rem;
-            font-weight: 400;
+            font-weight: 500;
         }
 
         .hero-description {
-            font-size: 1rem;
-            color: var(--mid-grey);
+            font-size: 1.05rem;
+            color: var(--off-white);
             margin-bottom: 2.5rem;
-            line-height: 1.7;
+            line-height: 1.8;
+            max-width: 500px;
         }
 
         .hero-cta {
@@ -206,128 +276,210 @@
         }
 
         .btn {
-            padding: 1rem 2rem;
+            padding: 1rem 2.5rem;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
         }
 
         .btn-primary {
-            background: var(--accent-warm);
-            color: var(--white);
-            border: 2px solid var(--accent-warm);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+            color: var(--bg-dark);
+            border: 2px solid transparent;
+            box-shadow: 0 10px 40px rgba(139, 155, 122, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--accent-light);
-            border-color: var(--accent-light);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(139, 155, 122, 0.5);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--accent-warm);
-            border: 2px solid var(--accent-warm);
+            color: var(--accent-bright);
+            border: 2px solid var(--accent);
         }
 
         .btn-secondary:hover {
-            background: var(--accent-warm);
-            color: var(--white);
+            background: rgba(139, 155, 122, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 155, 122, 0.2);
         }
 
         .hero-image {
             position: relative;
             height: 600px;
+            border-radius: 20px;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            background: var(--charcoal);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(139, 155, 122, 0.2) 0%, transparent 100%);
+            z-index: 1;
         }
 
         .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.05);
         }
 
         /* Sections */
         section {
-            padding: 5rem 0;
+            padding: 6rem 0;
+            position: relative;
         }
 
         .section-header {
             text-align: center;
             margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-eyebrow {
             font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--accent-warm);
+            letter-spacing: 0.2em;
+            color: var(--accent-bright);
             margin-bottom: 1rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 600;
-            color: var(--charcoal);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--warm-white);
             margin-bottom: 1rem;
         }
 
         .section-description {
-            font-size: 1.1rem;
-            color: var(--mid-grey);
+            font-size: 1.15rem;
+            color: var(--off-white);
             max-width: 600px;
             margin: 0 auto;
         }
 
         /* About */
         .about {
-            background: var(--white);
+            background: rgba(26, 26, 26, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .about-content {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 1.2fr 1fr;
             gap: 4rem;
             align-items: start;
         }
 
+        .about-text {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         .about-text p {
             font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--dark-grey);
+            line-height: 1.9;
+            color: var(--off-white);
             margin-bottom: 1.5rem;
         }
 
         .about-features {
             display: grid;
-            gap: 2rem;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .about-features.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .feature-box {
             padding: 1.5rem;
-            background: var(--warm-white);
-            border-left: 3px solid var(--accent-warm);
+            background: rgba(139, 155, 122, 0.1);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover {
+            background: rgba(139, 155, 122, 0.2);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(139, 155, 122, 0.2);
         }
 
         .feature-box h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
-            color: var(--charcoal);
+            color: var(--warm-white);
         }
 
         .feature-box p {
-            color: var(--mid-grey);
+            color: var(--off-white);
             font-size: 0.95rem;
         }
 
         /* Menu */
         .menu {
-            background: var(--warm-white);
+            background: var(--bg-dark);
         }
 
         .menu-categories {
@@ -335,130 +487,210 @@
             gap: 4rem;
         }
 
-        .menu-category h3 {
+        .menu-category {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-category.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: var(--charcoal);
+            color: var(--warm-white);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
         .menu-item {
-            background: var(--white);
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
             padding: 1.5rem;
-            border: 1px solid var(--soft-grey);
+            border: 1px solid rgba(139, 155, 122, 0.2);
+            border-radius: 15px;
             transition: all 0.3s ease;
         }
 
         .menu-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
+            background: rgba(26, 26, 26, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(139, 155, 122, 0.3);
         }
 
         .menu-item-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .menu-item-name {
             font-weight: 600;
-            color: var(--charcoal);
-            font-size: 1rem;
+            color: var(--warm-white);
+            font-size: 1.1rem;
         }
 
         .menu-item-price {
-            font-weight: 600;
-            color: var(--accent-warm);
+            font-weight: 700;
+            color: var(--accent-bright);
             white-space: nowrap;
             margin-left: 1rem;
+            font-size: 1.1rem;
         }
 
         .menu-item-description {
             font-size: 0.9rem;
-            color: var(--mid-grey);
-            line-height: 1.5;
+            color: var(--off-white);
+            line-height: 1.6;
         }
 
         /* Gallery */
         .gallery {
-            background: var(--white);
+            background: rgba(26, 26, 26, 0.5);
+            padding: 6rem 0;
+            overflow: hidden;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+        .gallery-scroll {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 40s linear infinite;
+            padding: 2rem 0;
+        }
+
+        .gallery-scroll:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-350px * 6 - 2rem * 6)); }
         }
 
         .gallery-item {
-            position: relative;
-            height: 350px;
+            flex: 0 0 350px;
+            height: 450px;
+            border-radius: 20px;
             overflow: hidden;
-            background: var(--soft-grey);
+            background: var(--charcoal);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.6s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         /* Reviews */
         .reviews {
-            background: var(--warm-white);
+            background: var(--bg-dark);
+            padding: 6rem 0;
+            overflow: hidden;
         }
 
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        .reviews-scroll {
+            display: flex;
             gap: 2rem;
+            animation: scrollReviews 50s linear infinite;
+            padding: 2rem 0;
+        }
+
+        .reviews-scroll:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollReviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-380px * 8 - 2rem * 8)); }
         }
 
         .review-card {
-            background: var(--white);
-            padding: 2rem;
-            border: 1px solid var(--soft-grey);
+            flex: 0 0 380px;
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border: 1px solid rgba(139, 155, 122, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            background: rgba(26, 26, 26, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(139, 155, 122, 0.3);
         }
 
         .review-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid var(--soft-grey);
+            border-bottom: 1px solid rgba(139, 155, 122, 0.2);
         }
 
         .review-author {
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--warm-white);
+            font-size: 1.1rem;
         }
 
         .review-stars {
-            color: var(--accent-warm);
+            color: var(--gold);
+            font-size: 1.2rem;
         }
 
         .review-text {
-            color: var(--dark-grey);
-            line-height: 1.7;
+            color: var(--off-white);
+            line-height: 1.8;
             font-size: 0.95rem;
         }
 
         /* Features */
         .features {
-            background: var(--white);
+            background: rgba(26, 26, 26, 0.5);
         }
 
         .features-grid {
@@ -469,110 +701,157 @@
 
         .feature-item {
             text-align: center;
+            padding: 2rem;
+            background: rgba(139, 155, 122, 0.05);
+            border: 1px solid rgba(139, 155, 122, 0.2);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-item:hover {
+            background: rgba(139, 155, 122, 0.15);
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(139, 155, 122, 0.3);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
         .feature-item h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            color: var(--charcoal);
+            color: var(--warm-white);
         }
 
         .feature-item p {
-            color: var(--mid-grey);
+            color: var(--off-white);
             font-size: 0.95rem;
         }
 
         /* Location */
         .location {
-            background: var(--warm-white);
+            background: var(--bg-dark);
         }
 
         .location-content {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: start;
+        }
+
+        .location-info {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .location-info.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .location-info h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--charcoal);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--warm-white);
         }
 
         .location-details p {
             margin-bottom: 1rem;
-            color: var(--dark-grey);
-            line-height: 1.7;
+            color: var(--off-white);
+            line-height: 1.8;
+            font-size: 1.05rem;
         }
 
         .location-details strong {
             display: block;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             margin-bottom: 0.5rem;
-            color: var(--charcoal);
+            color: var(--accent-bright);
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .map-container {
-            height: 450px;
-            background: var(--soft-grey);
+            height: 500px;
+            background: var(--charcoal);
+            border-radius: 20px;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .map-container.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: none;
+            filter: grayscale(1) invert(0.9);
         }
 
         /* Footer */
         footer {
-            background: var(--charcoal);
-            color: var(--warm-white);
-            padding: 3rem 0 1.5rem;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(139, 155, 122, 0.2);
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 3rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .footer-section h4 {
             font-family: 'Playfair Display', serif;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: var(--warm-white);
         }
 
         .footer-section p,
         .footer-section a {
-            color: var(--light-grey);
+            color: var(--off-white);
             text-decoration: none;
             display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .footer-section a:hover {
-            color: var(--accent-light);
+            color: var(--accent-bright);
+            transform: translateX(5px);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid var(--dark-grey);
-            color: var(--light-grey);
-            font-size: 0.85rem;
+            border-top: 1px solid rgba(139, 155, 122, 0.2);
+            color: var(--off-white);
+            font-size: 0.9rem;
         }
 
         /* Responsive */
@@ -599,10 +878,11 @@
                 width: 70%;
                 max-width: 300px;
                 flex-direction: column;
-                background: var(--white);
+                background: rgba(15, 15, 15, 0.98);
+                backdrop-filter: blur(20px);
                 padding: 5rem 2rem;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+                transition: right 0.4s ease;
             }
 
             .nav-links.active {
@@ -639,10 +919,32 @@
             .nav-container {
                 padding: 0 1.5rem;
             }
+
+            @keyframes scroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-300px * 6 - 2rem * 6)); }
+            }
+
+            .gallery-item {
+                flex: 0 0 300px;
+                height: 380px;
+            }
+
+            @keyframes scrollReviews {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-320px * 8 - 2rem * 8)); }
+            }
+
+            .review-card {
+                flex: 0 0 320px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bg-animated"></div>
+    <div class="particles" id="particles"></div>
+
     <nav id="nav">
         <div class="nav-container">
             <div class="logo">Café No.41</div>
@@ -653,7 +955,7 @@
                 <li><a href="#location">Visit</a></li>
             </ul>
             <div style="display: flex; gap: 1rem; align-items: center;">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">◐</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">✨</button>
                 <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -668,14 +970,14 @@
             <div class="hero-content">
                 <h1>Café No.41</h1>
                 <p class="hero-subtitle">Your neighbourhood's warmest welcome</p>
-                <p class="hero-description">Serving quality coffee and fresh food in East Barnet Village. A calm, comfortable space where locals gather and conversations flow.</p>
+                <p class="hero-description">Serving quality coffee and fresh food in East Barnet Village. A calm, comfortable space where locals gather and conversations flow naturally.</p>
                 <div class="hero-cta">
-                    <a href="#location" class="btn btn-primary">Visit Us</a>
-                    <a href="#menu" class="btn btn-secondary">View Menu</a>
+                    <a href="#location" class="btn btn-primary"><span>Visit Us</span></a>
+                    <a href="#menu" class="btn btn-secondary"><span>View Menu</span></a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://i.ibb.co/1YPmNTg/3.png" alt="Café No.41 Interior" onerror="this.style.display='none';">
+                <img src="https://i.ibb.co/1YPmNTg/3.png" alt="Café No.41 Interior" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
             </div>
         </div>
     </section>
@@ -688,22 +990,22 @@
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Café No.41 is a locally loved gathering spot in the heart of East Barnet Village. We believe in simplicity done right—premium ingredients, skilled preparation, and genuine hospitality.</p>
-                    <p>From early morning commuters to afternoon catch-ups, we're here to fuel your day with quality coffee, fresh food, and a space that feels like home.</p>
-                    <p>Open Monday to Saturday from 6:15am to 5pm, we're proud to be part of your daily routine.</p>
+                    <p>Café No.41 is a locally loved gathering spot in the heart of East Barnet Village. We believe in simplicity done right—premium ingredients, skilled preparation, and genuine hospitality that makes every visit feel special.</p>
+                    <p>From early morning commuters grabbing their first coffee to afternoon friends catching up over fresh pastries, we're here to fuel your day with quality, warmth, and care.</p>
+                    <p>Open Monday to Saturday from 6:15am to 5pm, we're proud to be part of your daily routine and the heartbeat of our community.</p>
                 </div>
                 <div class="about-features">
                     <div class="feature-box">
                         <h3>Premium Coffee</h3>
-                        <p>Carefully sourced beans, expertly brewed</p>
+                        <p>Carefully sourced beans, expertly brewed to perfection every time</p>
                     </div>
                     <div class="feature-box">
                         <h3>Fresh Food Daily</h3>
-                        <p>Made fresh every morning</p>
+                        <p>Made fresh every morning with quality ingredients</p>
                     </div>
                     <div class="feature-box">
                         <h3>Local & Trusted</h3>
-                        <p>Serving the community for years</p>
+                        <p>Proudly serving the East Barnet community for years</p>
                     </div>
                 </div>
             </div>
@@ -719,91 +1021,103 @@
             </div>
             <div class="menu-categories">
                 <div class="menu-category">
-                    <h3>Hot Drinks</h3>
+                    <h3 class="category-title">☕ Hot Drinks</h3>
                     <div class="menu-grid">
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Espresso</span>
                                 <span class="menu-item-price">£2.20</span>
                             </div>
+                            <div class="menu-item-description">Rich and bold shot of pure coffee goodness</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Americano</span>
                                 <span class="menu-item-price">£2.50</span>
                             </div>
+                            <div class="menu-item-description">Smooth espresso with hot water, perfectly balanced</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Cappuccino</span>
                                 <span class="menu-item-price">£2.80</span>
                             </div>
+                            <div class="menu-item-description">Espresso topped with velvety steamed milk foam</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Latte</span>
                                 <span class="menu-item-price">£2.80</span>
                             </div>
+                            <div class="menu-item-description">Smooth and creamy espresso with steamed milk</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Flat White</span>
                                 <span class="menu-item-price">£2.80</span>
                             </div>
+                            <div class="menu-item-description">Silky microfoam with double espresso shot</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Mocha</span>
                                 <span class="menu-item-price">£3.20</span>
                             </div>
+                            <div class="menu-item-description">Rich chocolate blended with espresso and milk</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Hot Chocolate</span>
                                 <span class="menu-item-price">£3.00</span>
                             </div>
+                            <div class="menu-item-description">Warming and indulgent chocolate drink</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Tea</span>
                                 <span class="menu-item-price">£2.00</span>
                             </div>
+                            <div class="menu-item-description">Selection of premium teas, brewed to perfection</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="menu-category">
-                    <h3>Cold Drinks</h3>
+                    <h3 class="category-title">🧊 Cold Drinks</h3>
                     <div class="menu-grid">
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Iced Latte</span>
                                 <span class="menu-item-price">£3.20</span>
                             </div>
+                            <div class="menu-item-description">Chilled espresso with cold milk over ice</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Iced Americano</span>
                                 <span class="menu-item-price">£2.80</span>
                             </div>
+                            <div class="menu-item-description">Refreshing cold espresso with water and ice</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Smoothie</span>
                                 <span class="menu-item-price">£4.50</span>
                             </div>
+                            <div class="menu-item-description">Fresh fruit blended to creamy perfection</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Fresh Juice</span>
                                 <span class="menu-item-price">£3.80</span>
                             </div>
+                            <div class="menu-item-description">Freshly squeezed daily, bursting with flavour</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="menu-category">
-                    <h3>Food</h3>
+                    <h3 class="category-title">🥐 Food</h3>
                     <div class="menu-grid">
                         <div class="menu-item">
                             <div class="menu-item-header">
@@ -817,35 +1131,35 @@
                                 <span class="menu-item-name">Pastries</span>
                                 <span class="menu-item-price">£2.50</span>
                             </div>
-                            <div class="menu-item-description">Daily selection of fresh pastries</div>
+                            <div class="menu-item-description">Daily selection of fresh pastries and croissants</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Sandwich</span>
                                 <span class="menu-item-price">£5.50</span>
                             </div>
-                            <div class="menu-item-description">Freshly made daily</div>
+                            <div class="menu-item-description">Freshly made daily with quality ingredients</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Panini</span>
                                 <span class="menu-item-price">£5.80</span>
                             </div>
-                            <div class="menu-item-description">Hot pressed to perfection</div>
+                            <div class="menu-item-description">Hot pressed to golden perfection</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Salad Box</span>
                                 <span class="menu-item-price">£6.50</span>
                             </div>
-                            <div class="menu-item-description">Fresh and healthy option</div>
+                            <div class="menu-item-description">Fresh, crisp and full of healthy goodness</div>
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-header">
                                 <span class="menu-item-name">Cake Slice</span>
                                 <span class="menu-item-price">£3.50</span>
                             </div>
-                            <div class="menu-item-description">Homemade daily</div>
+                            <div class="menu-item-description">Homemade daily, irresistibly delicious</div>
                         </div>
                     </div>
                 </div>
@@ -859,25 +1173,43 @@
                 <div class="section-eyebrow">Atmosphere</div>
                 <h2 class="section-title">A Space That Feels Like Home</h2>
             </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/x46phBj/1.png" alt="Café No.41 Interior" loading="lazy" onerror="this.parentElement.style.background='#e8e8e8';">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/vxsrrjg/2.png" alt="Coffee Counter" loading="lazy" onerror="this.parentElement.style.background='#e8e8e8';">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/rKPn5w4/5.png" alt="Fresh Food" loading="lazy" onerror="this.parentElement.style.background='#e8e8e8';">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/BVgv3NK/6.png" alt="Cosy Corner" loading="lazy" onerror="this.parentElement.style.background='#e8e8e8';">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/sGdNxph/7.png" alt="Coffee Art" loading="lazy" onerror="this.parentElement.style.background='#e8e8e8';">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/GfXVyxn/8.png" alt="Café Atmosphere" loading="lazy" onerror="this.parentElement.style.background='#e8e8e8';">
-                </div>
+        </div>
+        <div class="gallery-scroll">
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/x46phBj/1.png" alt="Café Interior" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/vxsrrjg/2.png" alt="Coffee Counter" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/rKPn5w4/5.png" alt="Fresh Food" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/BVgv3NK/6.png" alt="Cosy Corner" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/sGdNxph/7.png" alt="Coffee Art" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/GfXVyxn/8.png" alt="Café Atmosphere" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/x46phBj/1.png" alt="Café Interior" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/vxsrrjg/2.png" alt="Coffee Counter" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/rKPn5w4/5.png" alt="Fresh Food" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/BVgv3NK/6.png" alt="Cosy Corner" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/sGdNxph/7.png" alt="Coffee Art" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/GfXVyxn/8.png" alt="Café Atmosphere" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)';">
             </div>
         </div>
     </section>
@@ -888,49 +1220,119 @@
                 <div class="section-eyebrow">Testimonials</div>
                 <h2 class="section-title">What Our Customers Say</h2>
             </div>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">Emma Thompson</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <p class="review-text">"Best coffee in East Barnet! The staff are always friendly and the atmosphere is perfect for a morning coffee before work."</p>
+        </div>
+        <div class="reviews-scroll">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Emma Thompson</div>
+                    <div class="review-stars">★★★★★</div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">James Wilson</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <p class="review-text">"Been coming here for years. Consistently great quality and service. The breakfast sandwiches are unbeatable."</p>
+                <p class="review-text">"Absolutely love this place! The coffee is exceptional and the staff are so welcoming. It's become my daily ritual before work. The atmosphere is perfect for a quiet morning or catching up with friends."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">James Wilson</div>
+                    <div class="review-stars">★★★★★</div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">Sarah Mitchell</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <p class="review-text">"A proper local café that cares about quality. Fresh food every day and coffee that's better than the chains."</p>
+                <p class="review-text">"I've been coming here for years and the quality never drops. The breakfast sandwiches are unbeatable and the coffee is always consistently excellent. A true gem in East Barnet."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Sarah Mitchell</div>
+                    <div class="review-stars">★★★★★</div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">David Chen</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <p class="review-text">"Great place to work remotely. Good wifi, comfortable seating, and excellent coffee. What more could you ask for?"</p>
+                <p class="review-text">"Perfect local café that genuinely cares about quality. Everything is fresh, the coffee is amazing, and it's so much better than the big chains. Love supporting local businesses like this."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">David Chen</div>
+                    <div class="review-stars">★★★★★</div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">Lisa Parker</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <p class="review-text">"Lovely little café with a warm, welcoming atmosphere. The staff remember your order which makes you feel valued."</p>
+                <p class="review-text">"My go-to spot for remote work. Great WiFi, comfortable seating, and the coffee keeps me going all day. The staff are friendly and remember your order. Highly recommend!"</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Lisa Parker</div>
+                    <div class="review-stars">★★★★★</div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">Michael Brown</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <p class="review-text">"Perfect spot for meeting friends or just grabbing a quick coffee. Always clean, always friendly, always good."</p>
+                <p class="review-text">"Such a lovely atmosphere! It's cosy without being cramped, and you always feel welcome. The pastries are delicious and clearly made with care. This is what a neighbourhood café should be."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Michael Brown</div>
+                    <div class="review-stars">★★★★★</div>
                 </div>
+                <p class="review-text">"Best coffee in the area, hands down. Whether I'm grabbing something quick or sitting down for a proper breakfast, it's always spot on. The consistency is impressive."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Rachel Green</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"A hidden treasure in East Barnet! The food is always fresh, the coffee is exceptional, and the service is warm and genuine. It feels like visiting friends every time."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Tom Harrison</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"I've tried every café in the area and this is by far the best. Great quality ingredients, skilled baristas, and a genuinely welcoming vibe. Worth every visit."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Emma Thompson</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"Absolutely love this place! The coffee is exceptional and the staff are so welcoming. It's become my daily ritual before work. The atmosphere is perfect for a quiet morning or catching up with friends."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">James Wilson</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"I've been coming here for years and the quality never drops. The breakfast sandwiches are unbeatable and the coffee is always consistently excellent. A true gem in East Barnet."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Sarah Mitchell</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"Perfect local café that genuinely cares about quality. Everything is fresh, the coffee is amazing, and it's so much better than the big chains. Love supporting local businesses like this."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">David Chen</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"My go-to spot for remote work. Great WiFi, comfortable seating, and the coffee keeps me going all day. The staff are friendly and remember your order. Highly recommend!"</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Lisa Parker</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"Such a lovely atmosphere! It's cosy without being cramped, and you always feel welcome. The pastries are delicious and clearly made with care. This is what a neighbourhood café should be."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Michael Brown</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"Best coffee in the area, hands down. Whether I'm grabbing something quick or sitting down for a proper breakfast, it's always spot on. The consistency is impressive."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Rachel Green</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"A hidden treasure in East Barnet! The food is always fresh, the coffee is exceptional, and the service is warm and genuine. It feels like visiting friends every time."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-author">Tom Harrison</div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">"I've tried every café in the area and this is by far the best. Great quality ingredients, skilled baristas, and a genuinely welcoming vibe. Worth every visit."</p>
             </div>
         </div>
     </section>
@@ -943,34 +1345,34 @@
             </div>
             <div class="features-grid">
                 <div class="feature-item">
-                    <div class="feature-icon">☕</div>
+                    <span class="feature-icon">☕</span>
                     <h3>Premium Coffee</h3>
                     <p>Carefully selected beans, expertly brewed</p>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">🥐</div>
+                    <span class="feature-icon">🥐</span>
                     <h3>Fresh Food</h3>
-                    <p>Made fresh daily</p>
+                    <p>Made fresh daily with quality ingredients</p>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">📶</div>
+                    <span class="feature-icon">📶</span>
                     <h3>Free WiFi</h3>
-                    <p>Stay connected</p>
+                    <p>Fast and reliable connection</p>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">🪑</div>
+                    <span class="feature-icon">🪑</span>
                     <h3>Comfortable Seating</h3>
                     <p>Perfect for work or relaxation</p>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">💳</div>
+                    <span class="feature-icon">💳</span>
                     <h3>Card Payments</h3>
-                    <p>Contactless accepted</p>
+                    <p>Contactless payments accepted</p>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">🥤</div>
+                    <span class="feature-icon">🥤</span>
                     <h3>Takeaway</h3>
-                    <p>Grab and go options</p>
+                    <p>Quick grab and go options</p>
                 </div>
             </div>
         </div>
@@ -995,7 +1397,7 @@
                         <p><strong>Opening Hours</strong></p>
                         <p>Monday - Saturday: 6:15am - 5:00pm<br>Sunday: Closed</p>
                     </div>
-                    <a href="tel:02083332204" class="btn btn-primary">Call Us</a>
+                    <a href="tel:02083332204" class="btn btn-primary" style="margin-top: 2rem;"><span>Call Us</span></a>
                 </div>
                 <div class="map-container">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2474.7777!2d-0.1656!3d51.6445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDM4JzQwLjIiTiAwwrAwOSc1Ni4yIlc!5e0!3m2!1sen!2suk!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
@@ -1009,7 +1411,7 @@
             <div class="footer-grid">
                 <div class="footer-section">
                     <h4>Café No.41</h4>
-                    <p>Your neighbourhood café serving quality coffee and fresh food in East Barnet Village.</p>
+                    <p>Your neighbourhood café serving quality coffee and fresh food in East Barnet Village. A warm, welcoming space for everyone.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -1020,13 +1422,12 @@
                 </div>
                 <div class="footer-section">
                     <h4>Opening Hours</h4>
-                    <p>Mon-Sat: 6:15am - 5pm</p>
-                    <p>Sunday: Closed</p>
+                    <p>Monday - Saturday<br>6:15am - 5:00pm</p>
+                    <p>Sunday<br>Closed</p>
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
-                    <p>41 Church Hill Rd</p>
-                    <p>East Barnet, EN4 8SY</p>
+                    <p>41 Church Hill Rd<br>East Barnet, EN4 8SY</p>
                     <p>020 8333 2204</p>
                 </div>
             </div>
@@ -1037,20 +1438,30 @@
     </footer>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', savedTheme);
-        themeToggle.textContent = savedTheme === 'dark' ? '◑' : '◐';
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '◑' : '◐';
+        // Floating Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Navigation Scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
         });
 
         // Mobile Menu
@@ -1069,14 +1480,22 @@
             });
         });
 
-        // Scroll Nav
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-header, .about-text, .about-features, .menu-category, .feature-item, .location-info, .map-container').forEach(el => {
+            observer.observe(el);
         });
 
         // Smooth Scroll

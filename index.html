@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café No.41 — East Barnet Village, North London</title>
-    <meta name="description" content="Premium breakfast and coffee in East Barnet Village. Fresh food, cosy atmosphere, quality service. Open Mon-Sat 6:15am-5pm.">
+    <title>Café No.41 — East Barnet Village</title>
+    <meta name="description" content="Premium breakfast and coffee in East Barnet. Fresh food, cosy atmosphere. Open Mon-Sat 6:15am-5pm.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,57 +14,59 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --bg-primary: #f5efe7;
-            --bg-secondary: #ebe4da;
-            --text-primary: #1a1410;
-            --text-secondary: #4a423a;
-            --accent: #c6a96b;
-            --accent-dark: #a08654;
-            --accent-light: #d9c691;
+            --espresso: #140f0c;
+            --brown: #2a1f18;
+            --brown-light: #3d2f23;
+            --cream: #f4eee6;
+            --cream-dark: #e8dfd3;
+            --gold: #d4af37;
+            --gold-light: #e8c966;
             --white: #ffffff;
         }
 
         body.dark-mode {
-            --bg-primary: #1a1410;
-            --bg-secondary: #2a2420;
-            --text-primary: #f5efe7;
-            --text-secondary: #c4bab0;
-            --accent: #c6a96b;
-            --accent-dark: #d9c691;
-            --accent-light: #a08654;
+            --espresso: #f4eee6;
+            --brown: #e8dfd3;
+            --brown-light: #d4c8b8;
+            --cream: #140f0c;
+            --cream-dark: #1f1812;
+            --gold: #d4af37;
+            --gold-light: #c49d2e;
         }
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            background: var(--cream);
+            color: var(--espresso);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
             position: relative;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         /* Animated Background */
-        .bg-animated {
+        .bg-gradient {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            z-index: -2;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 50%, var(--cream) 100%);
             background-size: 400% 400%;
-            animation: gradientMove 25s ease infinite;
+            animation: gradientFlow 30s ease infinite;
         }
 
-        @keyframes gradientMove {
+        @keyframes gradientFlow {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
@@ -77,31 +79,28 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
+            overflow: hidden;
         }
 
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
             border-radius: 50%;
-            opacity: 0.4;
-            animation: floatParticle linear infinite;
+            opacity: 0.3;
+            animation: floatUp linear infinite;
         }
 
-        @keyframes floatParticle {
+        @keyframes floatUp {
             0% {
                 transform: translateY(100vh) translateX(0) scale(0);
                 opacity: 0;
             }
-            10% {
-                opacity: 0.4;
-            }
-            90% {
-                opacity: 0.4;
-            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
             100% {
-                transform: translateY(-100px) translateX(80px) scale(1);
+                transform: translateY(-100px) translateX(60px) scale(1);
                 opacity: 0;
             }
         }
@@ -109,7 +108,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
         }
 
         /* Navigation */
@@ -121,25 +120,23 @@
             z-index: 1000;
             background: transparent;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 1.5rem 0;
-        }
-
-        nav.scrolled {
-            background: rgba(245, 239, 231, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(26, 20, 16, 0.1);
             padding: 1rem 0;
         }
 
+        nav.scrolled {
+            background: rgba(244, 238, 230, 0.95);
+            backdrop-filter: blur(25px);
+            box-shadow: 0 4px 30px rgba(20, 15, 12, 0.1);
+        }
+
         body.dark-mode nav.scrolled {
-            background: rgba(26, 20, 16, 0.98);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(20, 15, 12, 0.95);
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -147,24 +144,24 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--text-primary);
+            color: var(--espresso);
             letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
             list-style: none;
             align-items: center;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--brown);
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: 600;
             transition: color 0.3s ease;
             position: relative;
         }
@@ -176,37 +173,41 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--accent);
+            background: var(--gold);
             transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--gold);
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
-        .dark-mode-toggle {
-            background: var(--accent);
+        .dark-toggle {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
             color: var(--white);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(198, 169, 107, 0.3);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
         }
 
-        .dark-mode-toggle:hover {
+        .dark-toggle:hover {
             transform: rotate(180deg) scale(1.1);
-            box-shadow: 0 6px 25px rgba(198, 169, 107, 0.5);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .dark-toggle:active {
+            transform: rotate(180deg) scale(0.95);
         }
 
         .menu-toggle {
@@ -219,9 +220,9 @@
         }
 
         .menu-toggle span {
-            width: 26px;
-            height: 2px;
-            background: var(--text-primary);
+            width: 28px;
+            height: 2.5px;
+            background: var(--espresso);
             transition: all 0.3s ease;
             border-radius: 2px;
         }
@@ -231,23 +232,20 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding-top: 100px;
-            padding-bottom: 4rem;
+            padding: 100px 0 4rem;
+            position: relative;
         }
 
         .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6rem;
+            gap: 4rem;
             align-items: center;
         }
 
         .hero-content {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(50px);
             animation: fadeInUp 1s ease forwards 0.3s;
         }
 
@@ -260,127 +258,118 @@
 
         .hero-content h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 7vw, 6rem);
+            font-size: clamp(3rem, 8vw, 5.5rem);
             font-weight: 800;
             line-height: 0.95;
             margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--espresso), var(--brown));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--accent);
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            color: var(--gold);
             margin-bottom: 1.2rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .hero-description {
             font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
+            color: var(--brown);
+            margin-bottom: 2.5rem;
             line-height: 1.8;
-            max-width: 500px;
+            max-width: 520px;
         }
 
         .hero-cta {
             display: flex;
             gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 1.1rem 2.8rem;
+            padding: 1.2rem 3rem;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: 'Inter', sans-serif;
-            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50px;
             position: relative;
             overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .btn:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .btn span {
-            position: relative;
-            z-index: 1;
+            display: inline-block;
         }
 
         .btn-primary {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: var(--white);
-            border: 2px solid var(--accent);
-            box-shadow: 0 10px 30px rgba(198, 169, 107, 0.3);
+            box-shadow: 0 10px 35px rgba(212, 175, 55, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(198, 169, 107, 0.4);
+            box-shadow: 0 15px 45px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
+            color: var(--gold);
+            border: 2px solid var(--gold);
         }
 
         .btn-secondary:hover {
-            background: var(--accent);
+            background: var(--gold);
             color: var(--white);
             transform: translateY(-3px);
         }
 
-        .hero-image {
+        .hero-image-wrap {
             position: relative;
-            height: 650px;
-            border-radius: 12px;
+            height: 600px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 70px rgba(26, 20, 16, 0.2);
-            background: linear-gradient(135deg, #2a2420 0%, #1a1410 100%);
+            box-shadow: 0 30px 80px rgba(20, 15, 12, 0.2);
+            background: linear-gradient(135deg, var(--brown-light), var(--brown));
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(50px);
             animation: fadeInUp 1s ease forwards 0.5s;
         }
 
-        .hero-image img {
+        .hero-image-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .hero-image-wrap img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.6s ease;
         }
 
-        .hero-image:hover img {
-            transform: scale(1.08);
+        .hero-image-wrap:hover img {
+            transform: scale(1.1);
         }
 
-        /* Sections */
+        /* Section Styles */
         section {
-            padding: 6rem 0;
+            padding: 5rem 0;
             position: relative;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -390,40 +379,50 @@
         }
 
         .section-eyebrow {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: var(--accent);
+            letter-spacing: 0.3em;
+            color: var(--gold);
             margin-bottom: 1rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 5vw, 4.5rem);
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1.2rem;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--espresso);
+            margin-bottom: 1rem;
             letter-spacing: -0.02em;
         }
 
         .section-description {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
+            font-size: 1.15rem;
+            color: var(--brown);
             max-width: 650px;
             margin: 0 auto;
-            line-height: 1.8;
         }
 
         /* About */
         .about {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 100%);
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
         .about-content {
             display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
-            gap: 5rem;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
             align-items: start;
         }
 
@@ -441,13 +440,13 @@
         .about-text p {
             font-size: 1.1rem;
             line-height: 1.9;
-            color: var(--text-secondary);
-            margin-bottom: 1.8rem;
+            color: var(--brown);
+            margin-bottom: 1.5rem;
         }
 
         .about-features {
             display: grid;
-            gap: 2rem;
+            gap: 1.5rem;
             opacity: 0;
             transform: translateX(40px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
@@ -460,153 +459,183 @@
 
         .feature-box {
             padding: 2rem;
-            background: var(--bg-primary);
-            border-left: 4px solid var(--accent);
-            border-radius: 8px;
+            background: var(--cream);
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(20, 15, 12, 0.08);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(26, 20, 16, 0.05);
         }
 
         .feature-box:hover {
             transform: translateX(12px);
-            box-shadow: 0 8px 30px rgba(198, 169, 107, 0.2);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.25);
+        }
+
+        .feature-box:active {
+            transform: translateX(8px);
         }
 
         .feature-box h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
-            margin-bottom: 0.6rem;
-            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            color: var(--espresso);
         }
 
         .feature-box p {
-            color: var(--text-secondary);
-            font-size: 1rem;
+            color: var(--brown);
         }
 
         /* Menu */
         .menu {
-            background: var(--bg-primary);
+            background: var(--cream);
         }
 
-        .menu-categories {
-            display: grid;
-            gap: 4rem;
+        .menu-categories-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 1rem;
+        }
+
+        .menu-categories-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-cat-btn {
+            padding: 1rem 2rem;
+            background: var(--cream-dark);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            color: var(--brown);
+            flex-shrink: 0;
+        }
+
+        .menu-cat-btn.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--white);
+            border-color: var(--gold);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .menu-cat-btn:hover {
+            border-color: var(--gold);
         }
 
         .menu-category {
+            display: none;
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .menu-category.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .menu-category.active {
+            display: grid;
+            animation: fadeIn 0.5s ease forwards;
         }
 
-        .category-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            margin-bottom: 2.5rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .category-title::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
         }
 
         .menu-item {
-            background: var(--bg-secondary);
-            padding: 1.8rem;
-            border: 1px solid transparent;
-            border-radius: 10px;
+            background: var(--cream-dark);
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 16px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(26, 20, 16, 0.05);
+            box-shadow: 0 4px 15px rgba(20, 15, 12, 0.05);
         }
 
         .menu-item:hover {
-            border-color: var(--accent);
+            border-color: var(--gold);
             transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(198, 169, 107, 0.2);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .menu-item:active {
+            transform: translateY(-2px);
         }
 
         .menu-item-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
         }
 
         .menu-item-name {
             font-weight: 700;
-            color: var(--text-primary);
-            font-size: 1.15rem;
+            color: var(--espresso);
+            font-size: 1.1rem;
         }
 
         .menu-item-price {
             font-weight: 700;
-            color: var(--accent);
+            color: var(--gold);
             white-space: nowrap;
             margin-left: 1rem;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
         }
 
         .menu-item-description {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            color: var(--brown);
             line-height: 1.6;
         }
 
         /* Gallery */
         .gallery {
-            background: var(--bg-secondary);
-            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 100%);
+            padding: 5rem 0;
             overflow: hidden;
         }
 
         .gallery-scroll {
             display: flex;
-            gap: 2.5rem;
-            animation: scrollGallery 50s linear infinite;
-            padding: 2rem 0;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 2rem 1.5rem;
         }
 
-        .gallery-scroll:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollGallery {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-380px * 6 - 2.5rem * 6)); }
+        .gallery-scroll::-webkit-scrollbar {
+            display: none;
         }
 
         .gallery-item {
-            flex: 0 0 380px;
-            height: 480px;
-            border-radius: 12px;
+            flex: 0 0 350px;
+            height: 450px;
+            scroll-snap-align: center;
+            border-radius: 16px;
             overflow: hidden;
-            background: linear-gradient(135deg, #2a2420 0%, #1a1410 100%);
-            box-shadow: 0 15px 50px rgba(26, 20, 16, 0.15);
+            background: linear-gradient(135deg, var(--brown-light), var(--brown));
+            box-shadow: 0 15px 50px rgba(20, 15, 12, 0.15);
+            position: relative;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: transform 0.5s ease;
         }
 
         .gallery-item:hover img {
@@ -615,41 +644,40 @@
 
         /* Reviews */
         .reviews {
-            background: var(--bg-primary);
-            padding: 6rem 0;
+            background: var(--cream);
+            padding: 5rem 0;
             overflow: hidden;
         }
 
         .reviews-scroll {
             display: flex;
-            gap: 2.5rem;
-            animation: scrollReviews 60s linear infinite;
-            padding: 2rem 0;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 2rem 1.5rem;
         }
 
-        .reviews-scroll:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollReviews {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-420px * 6 - 2.5rem * 6)); }
+        .reviews-scroll::-webkit-scrollbar {
+            display: none;
         }
 
         .review-card {
-            flex: 0 0 420px;
-            background: var(--bg-secondary);
-            padding: 3rem;
-            border: 1px solid transparent;
-            border-radius: 12px;
+            flex: 0 0 380px;
+            scroll-snap-align: center;
+            background: var(--cream-dark);
+            padding: 2.5rem;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(20, 15, 12, 0.1);
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(26, 20, 16, 0.08);
         }
 
         .review-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(198, 169, 107, 0.2);
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
         }
 
         .review-header {
@@ -658,45 +686,45 @@
             align-items: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(198, 169, 107, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         .review-author {
             font-weight: 700;
-            color: var(--text-primary);
-            font-size: 1.2rem;
+            color: var(--espresso);
+            font-size: 1.15rem;
         }
 
         .review-stars {
-            color: var(--accent);
+            color: var(--gold);
             font-size: 1.1rem;
         }
 
         .review-text {
-            color: var(--text-secondary);
+            color: var(--brown);
             line-height: 1.8;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
         /* Features */
         .features {
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--cream-dark) 0%, var(--cream) 100%);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
         }
 
         .feature-item {
             text-align: center;
-            padding: 2.5rem;
-            background: var(--bg-primary);
-            border: 1px solid transparent;
-            border-radius: 12px;
-            transition: all 0.4s ease;
-            box-shadow: 0 6px 20px rgba(26, 20, 16, 0.05);
+            padding: 2.5rem 2rem;
+            background: var(--cream);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(20, 15, 12, 0.08);
+            transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
         }
@@ -707,38 +735,40 @@
         }
 
         .feature-item:hover {
-            border-color: var(--accent);
+            border-color: var(--gold);
             transform: translateY(-10px);
-            box-shadow: 0 15px 45px rgba(198, 169, 107, 0.2);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25);
+        }
+
+        .feature-item:active {
+            transform: translateY(-5px);
         }
 
         .feature-icon {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            display: block;
         }
 
         .feature-item h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.6rem;
-            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--espresso);
         }
 
         .feature-item p {
-            color: var(--text-secondary);
-            font-size: 1rem;
+            color: var(--brown);
         }
 
         /* Location */
         .location {
-            background: var(--bg-primary);
+            background: var(--cream);
         }
 
         .location-content {
             display: grid;
             grid-template-columns: 1fr 1.4fr;
-            gap: 5rem;
+            gap: 4rem;
             align-items: start;
         }
 
@@ -755,44 +785,44 @@
 
         .location-info h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 2rem;
-            color: var(--text-primary);
+            color: var(--espresso);
         }
 
         .location-details p {
-            margin-bottom: 1.2rem;
-            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            color: var(--brown);
             line-height: 1.9;
             font-size: 1.1rem;
         }
 
         .location-details strong {
             display: block;
-            margin-top: 2.5rem;
-            margin-bottom: 0.8rem;
-            color: var(--accent);
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
         }
 
-        .map-container {
-            height: 550px;
-            background: linear-gradient(135deg, #2a2420 0%, #1a1410 100%);
-            border-radius: 12px;
+        .map-wrap {
+            height: 520px;
+            background: linear-gradient(135deg, var(--brown-light), var(--brown));
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(26, 20, 16, 0.15);
+            box-shadow: 0 25px 70px rgba(20, 15, 12, 0.2);
             opacity: 0;
             transform: translateX(40px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .map-container.visible {
+        .map-wrap.visible {
             opacity: 1;
             transform: translateX(0);
         }
 
-        .map-container iframe {
+        .map-wrap iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -800,54 +830,48 @@
 
         /* Footer */
         footer {
-            background: var(--text-primary);
-            color: var(--bg-primary);
+            background: linear-gradient(135deg, var(--espresso), var(--brown));
+            color: var(--cream);
             padding: 4rem 0 2rem;
-            border-top: 1px solid var(--accent);
-        }
-
-        body.dark-mode footer {
-            background: #0a0806;
+            border-top: 2px solid var(--gold);
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 2.5fr 1fr 1fr 1fr;
-            gap: 4rem;
+            gap: 3rem;
             margin-bottom: 3rem;
         }
 
         .footer-section h4 {
             font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            color: var(--accent);
+            color: var(--gold);
         }
 
         .footer-section p,
         .footer-section a {
-            color: var(--bg-secondary);
+            color: var(--cream-dark);
             text-decoration: none;
             display: block;
             margin-bottom: 0.8rem;
-            font-size: 1rem;
             transition: all 0.3s ease;
         }
 
         .footer-section a:hover {
-            color: var(--accent);
+            color: var(--gold);
             transform: translateX(5px);
         }
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2.5rem;
-            border-top: 1px solid rgba(198, 169, 107, 0.3);
-            color: var(--bg-secondary);
-            font-size: 0.95rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--cream-dark);
         }
 
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 968px) {
             .hero-container,
             .about-content,
@@ -855,7 +879,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .hero-image {
+            .hero-image-wrap {
                 height: 450px;
             }
 
@@ -868,12 +892,12 @@
                 top: 0;
                 right: -100%;
                 height: 100vh;
-                width: 75%;
+                width: 80%;
                 max-width: 350px;
                 flex-direction: column;
-                background: var(--bg-primary);
+                background: var(--cream);
                 padding: 6rem 2rem;
-                box-shadow: -10px 0 40px rgba(26, 20, 16, 0.3);
+                box-shadow: -15px 0 50px rgba(20, 15, 12, 0.3);
                 transition: right 0.4s ease;
             }
 
@@ -886,7 +910,7 @@
             }
 
             .menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translate(9px, 9px);
+                transform: rotate(45deg) translate(10px, 10px);
             }
 
             .menu-toggle.active span:nth-child(2) {
@@ -894,7 +918,20 @@
             }
 
             .menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(8px, -8px);
+                transform: rotate(-45deg) translate(9px, -9px);
+            }
+
+            .gallery-item {
+                flex: 0 0 300px;
+                height: 400px;
+            }
+
+            .review-card {
+                flex: 0 0 320px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -907,34 +944,19 @@
                 flex-direction: column;
             }
 
-            .container,
-            .nav-container {
-                padding: 0 1.5rem;
+            .btn {
+                width: 100%;
+                text-align: center;
             }
 
-            .gallery-item {
-                flex: 0 0 320px;
-                height: 400px;
-            }
-
-            .review-card {
-                flex: 0 0 350px;
-            }
-
-            @keyframes scrollGallery {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-320px * 6 - 2.5rem * 6)); }
-            }
-
-            @keyframes scrollReviews {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-350px * 6 - 2.5rem * 6)); }
+            .container {
+                padding: 0 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-animated"></div>
+    <div class="bg-gradient"></div>
     <div class="particles" id="particles"></div>
 
     <nav id="nav">
@@ -947,7 +969,7 @@
                 <li><a href="#location">Visit</a></li>
             </ul>
             <div style="display: flex; gap: 1rem; align-items: center;">
-                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">☀️</button>
+                <button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">☀️</button>
                 <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -958,18 +980,20 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1>Café No.41</h1>
-                <p class="hero-subtitle">East Barnet Village</p>
-                <p class="hero-description">Your neighbourhood's warmest welcome. Serving quality coffee, fresh food, and genuine hospitality since day one. A cosy space where everyone belongs.</p>
-                <div class="hero-cta">
-                    <a href="#location" class="btn btn-primary"><span>Visit Us</span></a>
-                    <a href="#menu" class="btn btn-secondary"><span>View Menu</span></a>
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Café No.41</h1>
+                    <p class="hero-subtitle">East Barnet Village</p>
+                    <p class="hero-description">Your neighbourhood's warmest welcome. Serving quality coffee, fresh food, and genuine hospitality since day one. A cosy space where everyone belongs.</p>
+                    <div class="hero-cta">
+                        <a href="#location" class="btn btn-primary">Visit Us</a>
+                        <a href="#menu" class="btn btn-secondary">View Menu</a>
+                    </div>
                 </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://i.ibb.co/n9kHT5q/7.png" alt="Café No.41 Interior" loading="lazy" onerror="this.style.display='none';">
+                <div class="hero-image-wrap">
+                    <img src="https://i.ibb.co/n9kHT5q/7.png" alt="Café No.41" loading="lazy" onerror="this.style.display='none';">
+                </div>
             </div>
         </div>
     </section>
@@ -982,22 +1006,22 @@
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Café No.41 is a locally loved gathering spot in the heart of East Barnet Village. We believe in simplicity done right—premium ingredients, skilled preparation, and genuine hospitality that makes every visit feel special.</p>
-                    <p>From early morning commuters grabbing their first coffee to friends meeting for a leisurely breakfast, we're here to fuel your day with quality, warmth, and care. Every dish is made fresh, every coffee is crafted with precision.</p>
-                    <p>Open Monday to Saturday from 6:15am to 5pm, we're proud to be part of your daily routine and the heartbeat of our community.</p>
+                    <p>Café No.41 is a locally loved gathering spot in the heart of East Barnet Village. We believe in simplicity done right—premium ingredients, skilled preparation, and genuine hospitality.</p>
+                    <p>From early morning commuters to friends meeting for brunch, we're here to fuel your day with quality, warmth, and care.</p>
+                    <p>Open Monday to Saturday from 6:15am to 5pm, we're proud to be part of your daily routine.</p>
                 </div>
                 <div class="about-features">
                     <div class="feature-box">
                         <h3>Premium Coffee</h3>
-                        <p>Carefully sourced beans, expertly brewed to perfection</p>
+                        <p>Expertly brewed to perfection</p>
                     </div>
                     <div class="feature-box">
                         <h3>Fresh Food Daily</h3>
-                        <p>Made fresh every morning with quality ingredients</p>
+                        <p>Made fresh every morning</p>
                     </div>
                     <div class="feature-box">
                         <h3>Community First</h3>
-                        <p>Proudly serving East Barnet for years</p>
+                        <p>Serving East Barnet for years</p>
                     </div>
                 </div>
             </div>
@@ -1009,459 +1033,120 @@
             <div class="section-header">
                 <div class="section-eyebrow">What We Serve</div>
                 <h2 class="section-title">Our Menu</h2>
-                <p class="section-description">Crafted with care, served with warmth</p>
             </div>
-            <div class="menu-categories">
-                <div class="menu-category">
-                    <h3 class="category-title">🍳 Breakfast</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Old School</span>
-                                <span class="menu-item-price">£9.50</span>
-                            </div>
-                            <div class="menu-item-description">Classic breakfast done right</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Classic</span>
-                                <span class="menu-item-price">£10.00</span>
-                            </div>
-                            <div class="menu-item-description">Traditional full English breakfast</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Classic 41</span>
-                                <span class="menu-item-price">£10.00</span>
-                            </div>
-                            <div class="menu-item-description">Our signature breakfast plate</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">The Hangover</span>
-                                <span class="menu-item-price">£11.50</span>
-                            </div>
-                            <div class="menu-item-description">Everything you need and more</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">The Big 41</span>
-                                <span class="menu-item-price">£12.50</span>
-                            </div>
-                            <div class="menu-item-description">Our biggest breakfast challenge</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Turkish Breakfast</span>
-                                <span class="menu-item-price">£12.00</span>
-                            </div>
-                            <div class="menu-item-description">Mediterranean inspired morning feast</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Mediterranean</span>
-                                <span class="menu-item-price">£12.00</span>
-                            </div>
-                            <div class="menu-item-description">Fresh flavours from the Med</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Vegetarian</span>
-                                <span class="menu-item-price">£11.00</span>
-                            </div>
-                            <div class="menu-item-description">Plant-based breakfast perfection</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Vegetarian Special</span>
-                                <span class="menu-item-price">£12.00</span>
-                            </div>
-                            <div class="menu-item-description">Elevated veggie breakfast</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Vegan Dream</span>
-                                <span class="menu-item-price">£11.00</span>
-                            </div>
-                            <div class="menu-item-description">100% plant-based goodness</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">The Halal</span>
-                                <span class="menu-item-price">£13.00</span>
-                            </div>
-                            <div class="menu-item-description">Premium halal breakfast spread</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="menu-categories-nav">
+                <button class="menu-cat-btn active" data-category="breakfast">🍳 Breakfast</button>
+                <button class="menu-cat-btn" data-category="toast">🍞 On Toast</button>
+                <button class="menu-cat-btn" data-category="sweet">🥞 Sweet</button>
+                <button class="menu-cat-btn" data-category="healthy">🥗 Healthy</button>
+                <button class="menu-cat-btn" data-category="sourdough">🥑 Sourdough</button>
+                <button class="menu-cat-btn" data-category="omelettes">🍳 Omelettes</button>
+                <button class="menu-cat-btn" data-category="sandwiches">🥪 Sandwiches</button>
+                <button class="menu-cat-btn" data-category="paninis">🥖 Paninis</button>
+                <button class="menu-cat-btn" data-category="wraps">🌯 Wraps</button>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🍞 On Toast</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Beans</span>
-                                <span class="menu-item-price">£4.90</span>
-                            </div>
-                            <div class="menu-item-description">Simple and satisfying</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Cheese</span>
-                                <span class="menu-item-price">£4.90</span>
-                            </div>
-                            <div class="menu-item-description">Melted to perfection</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Scrambled Egg</span>
-                                <span class="menu-item-price">£4.90</span>
-                            </div>
-                            <div class="menu-item-description">Fluffy and creamy</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Poached Egg</span>
-                                <span class="menu-item-price">£4.90</span>
-                            </div>
-                            <div class="menu-item-description">Perfectly cooked eggs</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Jam / Honey</span>
-                                <span class="menu-item-price">£3.50</span>
-                            </div>
-                            <div class="menu-item-description">Sweet morning treat</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Tea Cake</span>
-                                <span class="menu-item-price">£4.00</span>
-                            </div>
-                            <div class="menu-item-description">Traditional favourite</div>
-                        </div>
-                    </div>
+            <div class="menu-category active" data-category="breakfast">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Old School</span><span class="menu-item-price">£9.50</span></div><div class="menu-item-description">Classic breakfast done right</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Classic</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-description">Traditional full English</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Classic 41</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-description">Our signature breakfast</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Hangover</span><span class="menu-item-price">£11.50</span></div><div class="menu-item-description">Everything you need</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Big 41</span><span class="menu-item-price">£12.50</span></div><div class="menu-item-description">Our biggest challenge</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Turkish Breakfast</span><span class="menu-item-price">£12.00</span></div><div class="menu-item-description">Mediterranean feast</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mediterranean</span><span class="menu-item-price">£12.00</span></div><div class="menu-item-description">Fresh Med flavours</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegetarian</span><span class="menu-item-price">£11.00</span></div><div class="menu-item-description">Plant-based perfection</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegetarian Special</span><span class="menu-item-price">£12.00</span></div><div class="menu-item-description">Elevated veggie</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegan Dream</span><span class="menu-item-price">£11.00</span></div><div class="menu-item-description">100% plant-based</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Halal</span><span class="menu-item-price">£13.00</span></div><div class="menu-item-description">Premium halal spread</div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🥞 Sweet & Savoury</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">American Pancakes</span>
-                                <span class="menu-item-price">£11.90</span>
-                            </div>
-                            <div class="menu-item-description">Fluffy stacks with toppings</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Pancake Stack</span>
-                                <span class="menu-item-price">£11.90</span>
-                            </div>
-                            <div class="menu-item-description">Loaded pancake tower</div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="toast">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Beans</span><span class="menu-item-price">£4.90</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Cheese</span><span class="menu-item-price">£4.90</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Scrambled Egg</span><span class="menu-item-price">£4.90</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Poached Egg</span><span class="menu-item-price">£4.90</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Jam / Honey</span><span class="menu-item-price">£3.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tea Cake</span><span class="menu-item-price">£4.00</span></div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🥗 Healthy</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Porridge</span>
-                                <span class="menu-item-price">£7.50</span>
-                            </div>
-                            <div class="menu-item-description">Warming oats with toppings</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Granola</span>
-                                <span class="menu-item-price">£7.50</span>
-                            </div>
-                            <div class="menu-item-description">Crunchy and nutritious</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">French Toast / Pancakes</span>
-                                <span class="menu-item-price">£9.50</span>
-                            </div>
-                            <div class="menu-item-description">Sweet morning indulgence</div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="sweet">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">American Pancakes</span><span class="menu-item-price">£11.90</span></div><div class="menu-item-description">Fluffy stacks</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Pancake Stack</span><span class="menu-item-price">£11.90</span></div><div class="menu-item-description">Loaded tower</div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🥑 Sourdough</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Avocado Special</span>
-                                <span class="menu-item-price">£9.70</span>
-                            </div>
-                            <div class="menu-item-description">Smashed avo on artisan bread</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Eggs Florentine</span>
-                                <span class="menu-item-price">£10.00</span>
-                            </div>
-                            <div class="menu-item-description">Poached eggs with spinach</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Eggs Benedict</span>
-                                <span class="menu-item-price">£10.00</span>
-                            </div>
-                            <div class="menu-item-description">Classic brunch favourite</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Eggs Royale</span>
-                                <span class="menu-item-price">£10.50</span>
-                            </div>
-                            <div class="menu-item-description">With smoked salmon</div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="healthy">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Porridge</span><span class="menu-item-price">£7.50</span></div><div class="menu-item-description">Warming oats</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Granola</span><span class="menu-item-price">£7.50</span></div><div class="menu-item-description">Crunchy goodness</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">French Toast / Pancakes</span><span class="menu-item-price">£9.50</span></div><div class="menu-item-description">Sweet morning treat</div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🍳 Omelettes</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Plain</span>
-                                <span class="menu-item-price">£7.50</span>
-                            </div>
-                            <div class="menu-item-description">Simple and fluffy</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">1 Filling</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Your choice of filling</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">2 Fillings</span>
-                                <span class="menu-item-price">£9.50</span>
-                            </div>
-                            <div class="menu-item-description">Double the flavour</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">3 Fillings</span>
-                                <span class="menu-item-price">£10.50</span>
-                            </div>
-                            <div class="menu-item-description">Loaded omelette perfection</div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="sourdough">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Avocado Special</span><span class="menu-item-price">£9.70</span></div><div class="menu-item-description">Smashed avo perfection</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Eggs Florentine</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-description">Poached eggs with spinach</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Eggs Benedict</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-description">Classic brunch</div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Eggs Royale</span><span class="menu-item-price">£10.50</span></div><div class="menu-item-description">With smoked salmon</div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🥪 Sandwiches</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Cheese & Tomato</span>
-                                <span class="menu-item-price">£3.90</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Ham Salad</span>
-                                <span class="menu-item-price">£4.00</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Tuna Mayo</span>
-                                <span class="menu-item-price">£4.50</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Egg Mayo</span>
-                                <span class="menu-item-price">£4.00</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">BLT</span>
-                                <span class="menu-item-price">£4.50</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Salt Beef</span>
-                                <span class="menu-item-price">£6.80</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Egg</span>
-                                <span class="menu-item-price">£3.80</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Bacon</span>
-                                <span class="menu-item-price">£4.00</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Sausage</span>
-                                <span class="menu-item-price">£4.00</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Egg & Bacon</span>
-                                <span class="menu-item-price">£4.80</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Egg & Sausage</span>
-                                <span class="menu-item-price">£4.80</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Chicken Bacon Avocado</span>
-                                <span class="menu-item-price">£5.70</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Prawn</span>
-                                <span class="menu-item-price">£6.10</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Smoked Salmon</span>
-                                <span class="menu-item-price">£6.50</span>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Vegan Sausage</span>
-                                <span class="menu-item-price">£4.60</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="omelettes">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Plain</span><span class="menu-item-price">£7.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">1 Filling</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">2 Fillings</span><span class="menu-item-price">£9.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">3 Fillings</span><span class="menu-item-price">£10.50</span></div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🥖 Paninis</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Ham & Cheese</span>
-                                <span class="menu-item-price">£5.40</span>
-                            </div>
-                            <div class="menu-item-description">Classic hot pressed</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Tuna Mayo</span>
-                                <span class="menu-item-price">£5.50</span>
-                            </div>
-                            <div class="menu-item-description">Crispy and melty</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Chicken Escalope</span>
-                                <span class="menu-item-price">£7.00</span>
-                            </div>
-                            <div class="menu-item-description">Premium chicken panini</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Mozzarella & Avocado</span>
-                                <span class="menu-item-price">£6.80</span>
-                            </div>
-                            <div class="menu-item-description">Fresh and creamy</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Halloumi</span>
-                                <span class="menu-item-price">£6.80</span>
-                            </div>
-                            <div class="menu-item-description">Grilled cheese goodness</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Breakfast Panini</span>
-                                <span class="menu-item-price">£8.00</span>
-                            </div>
-                            <div class="menu-item-description">Morning favourite pressed</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Vegan Panini</span>
-                                <span class="menu-item-price">£7.00</span>
-                            </div>
-                            <div class="menu-item-description">Plant-based pressed delight</div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="sandwiches">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Cheese & Tomato</span><span class="menu-item-price">£3.90</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Ham Salad</span><span class="menu-item-price">£4.00</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tuna Mayo</span><span class="menu-item-price">£4.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Egg Mayo</span><span class="menu-item-price">£4.00</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">BLT</span><span class="menu-item-price">£4.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Salt Beef</span><span class="menu-item-price">£6.80</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Egg</span><span class="menu-item-price">£3.80</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Bacon</span><span class="menu-item-price">£4.00</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Sausage</span><span class="menu-item-price">£4.00</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Egg & Bacon</span><span class="menu-item-price">£4.80</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Egg & Sausage</span><span class="menu-item-price">£4.80</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Bacon Avocado</span><span class="menu-item-price">£5.70</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Prawn</span><span class="menu-item-price">£6.10</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Smoked Salmon</span><span class="menu-item-price">£6.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegan Sausage</span><span class="menu-item-price">£4.60</span></div></div>
                 </div>
+            </div>
 
-                <div class="menu-category">
-                    <h3 class="category-title">🌯 Wraps</h3>
-                    <div class="menu-grid">
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Chicken Shish</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Grilled chicken wrap</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Kofte</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Spiced lamb meatballs</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Falafel</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Crispy chickpea perfection</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Chicken Escalope</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Breaded chicken wrap</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Mighty Chicken</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Loaded chicken wrap</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Halloumi</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">Grilled cheese wrap</div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-header">
-                                <span class="menu-item-name">Breakfast Wrap</span>
-                                <span class="menu-item-price">£8.50</span>
-                            </div>
-                            <div class="menu-item-description">All-day breakfast to go</div>
-                        </div>
-                    </div>
+            <div class="menu-category" data-category="paninis">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Ham & Cheese</span><span class="menu-item-price">£5.40</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tuna Mayo</span><span class="menu-item-price">£5.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Escalope</span><span class="menu-item-price">£7.00</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mozzarella & Avocado</span><span class="menu-item-price">£6.80</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Halloumi</span><span class="menu-item-price">£6.80</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Breakfast Panini</span><span class="menu-item-price">£8.00</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegan Panini</span><span class="menu-item-price">£7.00</span></div></div>
+                </div>
+            </div>
+
+            <div class="menu-category" data-category="wraps">
+                <div class="menu-grid">
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Shish</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Kofte</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Falafel</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Escalope</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mighty Chicken</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Halloumi</span><span class="menu-item-price">£8.50</span></div></div>
+                    <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Breakfast Wrap</span><span class="menu-item-price">£8.50</span></div></div>
                 </div>
             </div>
         </div>
@@ -1475,42 +1160,12 @@
             </div>
         </div>
         <div class="gallery-scroll">
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/7drxF5R/1.png" alt="Café Interior" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/5wpftRv/2.png" alt="Coffee Counter" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/CphF6P3/3.png" alt="Fresh Food" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/FRb1rbj/5.png" alt="Breakfast Plate" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/Ng3dj4n/6.png" alt="Cosy Corner" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/TqRQvzH/8.png" alt="Café Atmosphere" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/7drxF5R/1.png" alt="Café Interior" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/5wpftRv/2.png" alt="Coffee Counter" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/CphF6P3/3.png" alt="Fresh Food" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/FRb1rbj/5.png" alt="Breakfast Plate" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/Ng3dj4n/6.png" alt="Cosy Corner" loading="lazy" onerror="this.style.display='none';">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.ibb.co/TqRQvzH/8.png" alt="Café Atmosphere" loading="lazy" onerror="this.style.display='none';">
-            </div>
+            <div class="gallery-item"><img src="https://i.ibb.co/7drxF5R/1.png" alt="Interior" loading="lazy" onerror="this.style.display='none';"></div>
+            <div class="gallery-item"><img src="https://i.ibb.co/5wpftRv/2.png" alt="Counter" loading="lazy" onerror="this.style.display='none';"></div>
+            <div class="gallery-item"><img src="https://i.ibb.co/CphF6P3/3.png" alt="Food" loading="lazy" onerror="this.style.display='none';"></div>
+            <div class="gallery-item"><img src="https://i.ibb.co/FRb1rbj/5.png" alt="Breakfast" loading="lazy" onerror="this.style.display='none';"></div>
+            <div class="gallery-item"><img src="https://i.ibb.co/Ng3dj4n/6.png" alt="Corner" loading="lazy" onerror="this.style.display='none';"></div>
+            <div class="gallery-item"><img src="https://i.ibb.co/TqRQvzH/8.png" alt="Atmosphere" loading="lazy" onerror="this.style.display='none';"></div>
         </div>
     </section>
 
@@ -1522,90 +1177,12 @@
             </div>
         </div>
         <div class="reviews-scroll">
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Emma Richardson</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Best breakfast spot in Barnet, always fresh and friendly. The full English is unbeatable and the coffee is exceptional every single time."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">James Carter</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Coffee is amazing and the vibe is super cosy. Perfect spot to start the day or meet friends for brunch. Genuinely love this place."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Sarah Phillips</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Perfect place to work and relax. Great WiFi, comfortable seating, and the staff are always welcoming. My regular morning spot."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">David Thompson</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Incredible quality for the price. Everything is freshly made and you can taste the care in every dish. Highly recommend the Turkish breakfast!"</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Lisa Morgan</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"A true neighbourhood gem. The staff remember your name and your order. Feels like coming home every time I visit."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Michael Bennett</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Best café in East Barnet without a doubt. Consistent quality, friendly service, and a warm atmosphere. Everything you could want."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Emma Richardson</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Best breakfast spot in Barnet, always fresh and friendly. The full English is unbeatable and the coffee is exceptional every single time."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">James Carter</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Coffee is amazing and the vibe is super cosy. Perfect spot to start the day or meet friends for brunch. Genuinely love this place."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Sarah Phillips</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Perfect place to work and relax. Great WiFi, comfortable seating, and the staff are always welcoming. My regular morning spot."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">David Thompson</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Incredible quality for the price. Everything is freshly made and you can taste the care in every dish. Highly recommend the Turkish breakfast!"</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Lisa Morgan</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"A true neighbourhood gem. The staff remember your name and your order. Feels like coming home every time I visit."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-author">Michael Bennett</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p class="review-text">"Best café in East Barnet without a doubt. Consistent quality, friendly service, and a warm atmosphere. Everything you could want."</p>
-            </div>
+            <div class="review-card"><div class="review-header"><div class="review-author">Emma Richardson</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Best breakfast spot in Barnet, always fresh and friendly. The full English is unbeatable."</p></div>
+            <div class="review-card"><div class="review-header"><div class="review-author">James Carter</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Coffee is amazing and the vibe is super cosy. Perfect spot to start the day."</p></div>
+            <div class="review-card"><div class="review-header"><div class="review-author">Sarah Phillips</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Perfect place to work and relax. Great WiFi, comfortable seating."</p></div>
+            <div class="review-card"><div class="review-header"><div class="review-author">David Thompson</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Incredible quality for the price. Everything is freshly made."</p></div>
+            <div class="review-card"><div class="review-header"><div class="review-author">Lisa Morgan</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"A true neighbourhood gem. The staff remember your name."</p></div>
+            <div class="review-card"><div class="review-header"><div class="review-author">Michael Bennett</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Best café in East Barnet without a doubt. Consistent quality."</p></div>
         </div>
     </section>
 
@@ -1616,36 +1193,12 @@
                 <h2 class="section-title">More Than Just Great Coffee</h2>
             </div>
             <div class="features-grid">
-                <div class="feature-item">
-                    <span class="feature-icon">📶</span>
-                    <h3>Free WiFi</h3>
-                    <p>Fast and reliable connection</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">☕</span>
-                    <h3>Premium Coffee</h3>
-                    <p>Expertly brewed every time</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🍳</span>
-                    <h3>Fresh Breakfast</h3>
-                    <p>Made fresh daily</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🚗</span>
-                    <h3>Easy Parking</h3>
-                    <p>Convenient location</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🐶</span>
-                    <h3>Dog Friendly</h3>
-                    <p>Your furry friends welcome</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">💳</span>
-                    <h3>Card Payments</h3>
-                    <p>Contactless accepted</p>
-                </div>
+                <div class="feature-item"><span class="feature-icon">📶</span><h3>Free WiFi</h3><p>Fast connection</p></div>
+                <div class="feature-item"><span class="feature-icon">☕</span><h3>Premium Coffee</h3><p>Expertly brewed</p></div>
+                <div class="feature-item"><span class="feature-icon">🍳</span><h3>Fresh Breakfast</h3><p>Made daily</p></div>
+                <div class="feature-item"><span class="feature-icon">🚗</span><h3>Easy Parking</h3><p>Convenient</p></div>
+                <div class="feature-item"><span class="feature-icon">🐶</span><h3>Dog Friendly</h3><p>Pets welcome</p></div>
+                <div class="feature-item"><span class="feature-icon">💳</span><h3>Card Payments</h3><p>Contactless</p></div>
             </div>
         </div>
     </section>
@@ -1662,17 +1215,15 @@
                     <div class="location-details">
                         <p><strong>Address</strong></p>
                         <p>41 Church Hill Rd<br>East Barnet Village<br>London, Barnet<br>EN4 8SY</p>
-                        
                         <p><strong>Phone</strong></p>
                         <p>020 8333 2204</p>
-                        
                         <p><strong>Opening Hours</strong></p>
                         <p>Monday - Saturday<br>6:15am - 5:00pm</p>
                         <p>Sunday: Closed</p>
                     </div>
-                    <a href="tel:02083332204" class="btn btn-primary" style="margin-top: 2rem;"><span>Call Us</span></a>
+                    <a href="tel:02083332204" class="btn btn-primary" style="margin-top: 2rem;">Call Us</a>
                 </div>
-                <div class="map-container">
+                <div class="map-wrap">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2474.7777!2d-0.1656!3d51.6445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDM4JzQwLjIiTiAwwrAwOSc1Ni4yIlc!5e0!3m2!1sen!2suk!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
@@ -1684,7 +1235,7 @@
             <div class="footer-grid">
                 <div class="footer-section">
                     <h4>Café No.41</h4>
-                    <p>Your neighbourhood café serving quality coffee, fresh food, and genuine hospitality in East Barnet Village since day one.</p>
+                    <p>Your neighbourhood café serving quality coffee, fresh food, and genuine hospitality in East Barnet Village.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -1694,7 +1245,7 @@
                     <a href="#location">Visit</a>
                 </div>
                 <div class="footer-section">
-                    <h4>Opening Hours</h4>
+                    <h4>Hours</h4>
                     <p>Monday - Saturday<br>6:15am - 5:00pm</p>
                     <p>Sunday: Closed</p>
                 </div>
@@ -1714,58 +1265,67 @@
         // Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            const count = 40;
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 25 + 20) + 's';
-                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 30 + 25) + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
                 container.appendChild(particle);
             }
         }
         createParticles();
 
         // Dark Mode
-        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkToggle = document.getElementById('darkToggle');
         const body = document.body;
-        
         const savedMode = localStorage.getItem('darkMode');
         if (savedMode === 'enabled') {
             body.classList.add('dark-mode');
-            darkModeToggle.textContent = '🌙';
+            darkToggle.textContent = '🌙';
         }
-        
-        darkModeToggle.addEventListener('click', () => {
+        darkToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             const isDark = body.classList.contains('dark-mode');
-            darkModeToggle.textContent = isDark ? '🌙' : '☀️';
+            darkToggle.textContent = isDark ? '🌙' : '☀️';
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         });
 
-        // Nav Scroll
+        // Nav
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 120) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            nav.classList.toggle('scrolled', window.scrollY > 100);
         });
 
         // Mobile Menu
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
-
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
                 navLinks.classList.remove('active');
+            });
+        });
+
+        // Menu Categories
+        const menuBtns = document.querySelectorAll('.menu-cat-btn');
+        const menuCategories = document.querySelectorAll('.menu-category');
+        menuBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                menuBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                menuCategories.forEach(cat => {
+                    if (cat.dataset.category === category) {
+                        cat.classList.add('active');
+                    } else {
+                        cat.classList.remove('active');
+                    }
+                });
             });
         });
 
@@ -1778,10 +1338,10 @@
             });
         }, {
             threshold: 0.1,
-            rootMargin: '0px 0px -80px 0px'
+            rootMargin: '0px 0px -100px 0px'
         });
 
-        document.querySelectorAll('.section-header, .about-text, .about-features, .menu-category, .feature-item, .location-info, .map-container').forEach(el => {
+        document.querySelectorAll('.section-header, .about-text, .about-features, .feature-item, .location-info, .map-wrap').forEach(el => {
             observer.observe(el);
         });
 
@@ -1791,9 +1351,8 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const offsetTop = target.offsetTop - 90;
                     window.scrollTo({
-                        top: offsetTop,
+                        top: target.offsetTop - 80,
                         behavior: 'smooth'
                     });
                 }

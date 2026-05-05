@@ -1,1303 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café No.41 — East Barnet Village</title>
-    <meta name="description" content="Premium breakfast and coffee in East Barnet Village. Fresh food, quality coffee, genuine hospitality. Open Mon-Sat 6:15am-5pm.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        :root {
-            --espresso: #120e0b;
-            --brown: #1f1813;
-            --brown-light: #2d2117;
-            --cream: #f5efe7;
-            --cream-dark: #e8dfd3;
-            --gold: #c6a96b;
-            --gold-dark: #a68d56;
-            --white: #ffffff;
-        }
-
-        body.dark-mode {
-            --espresso: #f5efe7;
-            --brown: #e8dfd3;
-            --brown-light: #d4c5a8;
-            --cream: #120e0b;
-            --cream-dark: #1f1813;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--cream);
-            color: var(--espresso);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-            transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, var(--espresso) 0%, var(--brown) 100%);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loading-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 300;
-            color: var(--cream);
-            letter-spacing: 0.1em;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* Animated Background */
-        .bg-layer {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 40s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .particles {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--gold);
-            border-radius: 50%;
-            opacity: 0.25;
-            animation: rise linear infinite;
-        }
-
-        @keyframes rise {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% { opacity: 0.25; }
-            90% { opacity: 0.25; }
-            100% {
-                transform: translateY(-10vh) translateX(50px);
-                opacity: 0;
-            }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 clamp(1.5rem, 5vw, 6rem);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        nav.scrolled {
-            background: rgba(245, 239, 231, 0.95);
-            backdrop-filter: blur(30px);
-            box-shadow: 0 1px 0 rgba(18, 14, 11, 0.05);
-            padding: 1rem 0;
-        }
-
-        body.dark-mode nav.scrolled {
-            background: rgba(18, 14, 11, 0.95);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 clamp(1.5rem, 5vw, 6rem);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            font-weight: 600;
-            color: var(--espresso);
-            letter-spacing: 0.02em;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: clamp(2rem, 4vw, 3rem);
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--brown);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--gold);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .theme-toggle {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid rgba(198, 169, 107, 0.3);
-            background: transparent;
-            color: var(--espresso);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-toggle:hover {
-            background: var(--gold);
-            color: var(--white);
-            border-color: var(--gold);
-            transform: rotate(180deg);
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            width: 24px;
-            height: 2px;
-            background: var(--espresso);
-            transition: all 0.3s ease;
-        }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: clamp(3rem, 6vw, 6rem);
-            align-items: center;
-            padding: clamp(8rem, 15vh, 12rem) 0 clamp(4rem, 8vh, 6rem);
-        }
-
-        .hero-content {
-            opacity: 0;
-            transform: translateY(40px);
-            animation: slideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 8vw, 7rem);
-            font-weight: 700;
-            line-height: 0.95;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-            color: var(--espresso);
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            color: var(--gold);
-            margin-bottom: 2rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-
-        .hero-description {
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
-            color: var(--brown);
-            line-height: 1.8;
-            margin-bottom: 3rem;
-            max-width: 540px;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1.1rem 2.8rem;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-block;
-            letter-spacing: 0.02em;
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            color: var(--white);
-            box-shadow: 0 4px 15px rgba(198, 169, 107, 0.25);
-        }
-
-        .btn-primary:hover {
-            background: var(--gold-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(198, 169, 107, 0.35);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--gold);
-            border: 1.5px solid var(--gold);
-        }
-
-        .btn-secondary:hover {
-            background: var(--gold);
-            color: var(--white);
-        }
-
-        .hero-image {
-            position: relative;
-            height: clamp(500px, 70vh, 700px);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(18, 14, 11, 0.15);
-            border: 1px solid rgba(18, 14, 11, 0.08);
-            opacity: 0;
-            transform: translateY(40px);
-            animation: slideUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .hero-image:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Sections */
-        section {
-            padding: clamp(5rem, 12vh, 8rem) 0;
-            position: relative;
-        }
-
-        .section-header {
-            max-width: 700px;
-            margin: 0 auto 5rem;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .section-header.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-eyebrow {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--gold);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .section-description {
-            font-size: 1.1rem;
-            color: var(--brown);
-            line-height: 1.8;
-        }
-
-        /* About */
-        .about {
-            background: linear-gradient(to bottom, var(--cream) 0%, var(--cream-dark) 100%);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: clamp(4rem, 8vw, 8rem);
-            align-items: start;
-        }
-
-        .about-text {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .about-text.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .about-text p {
-            font-size: 1.05rem;
-            line-height: 1.9;
-            color: var(--brown);
-            margin-bottom: 1.5rem;
-        }
-
-        .about-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
-        }
-
-        .about-features.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .feature-box {
-            padding: 2rem;
-            background: var(--cream);
-            border-left: 3px solid var(--gold);
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(18, 14, 11, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .feature-box:hover {
-            transform: translateX(8px);
-            box-shadow: 0 6px 25px rgba(198, 169, 107, 0.15);
-        }
-
-        .feature-box h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-box p {
-            color: var(--brown);
-            font-size: 0.95rem;
-        }
-
-        /* Menu */
-        .menu {
-            background: var(--cream);
-        }
-
-        .menu-nav {
-            display: flex;
-            gap: 1rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            margin-bottom: 3rem;
-            padding-bottom: 1rem;
-        }
-
-        .menu-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .menu-btn {
-            padding: 0.9rem 2rem;
-            background: var(--cream-dark);
-            border: 1.5px solid transparent;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            white-space: nowrap;
-            scroll-snap-align: start;
-            transition: all 0.3s ease;
-            color: var(--brown);
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-
-        .menu-btn.active {
-            background: var(--gold);
-            color: var(--white);
-            box-shadow: 0 4px 15px rgba(198, 169, 107, 0.3);
-        }
-
-        .menu-btn:hover {
-            border-color: var(--gold);
-        }
-
-        .menu-category {
-            display: none;
-        }
-
-        .menu-category.active {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .menu-item {
-            padding: 1.5rem;
-            background: var(--cream-dark);
-            border: 1px solid rgba(18, 14, 11, 0.08);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(18, 14, 11, 0.04);
-        }
-
-        .menu-item:hover {
-            border-color: var(--gold);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(198, 169, 107, 0.15);
-        }
-
-        .menu-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 0.5rem;
-        }
-
-        .menu-item-name {
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .menu-item-price {
-            font-weight: 700;
-            color: var(--gold);
-            white-space: nowrap;
-            margin-left: 1rem;
-        }
-
-        .menu-item-desc {
-            font-size: 0.9rem;
-            color: var(--brown);
-            line-height: 1.5;
-        }
-
-        /* Gallery */
-        .gallery {
-            background: var(--cream-dark);
-            padding: clamp(5rem, 10vh, 8rem) 0;
-            overflow: hidden;
-        }
-
-        .gallery-scroll {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding: 2rem clamp(1.5rem, 5vw, 6rem);
-            margin: 0 calc(-1 * clamp(1.5rem, 5vw, 6rem));
-        }
-
-        .gallery-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .gallery-item {
-            flex: 0 0 clamp(300px, 40vw, 450px);
-            height: clamp(400px, 50vh, 550px);
-            scroll-snap-align: center;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(18, 14, 11, 0.08);
-            box-shadow: 0 10px 40px rgba(18, 14, 11, 0.1);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.08);
-        }
-
-        /* Reviews */
-        .reviews {
-            background: var(--cream);
-            padding: clamp(5rem, 10vh, 8rem) 0;
-            overflow: hidden;
-        }
-
-        .reviews-scroll {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding: 2rem clamp(1.5rem, 5vw, 6rem);
-            margin: 0 calc(-1 * clamp(1.5rem, 5vw, 6rem));
-        }
-
-        .reviews-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .review-card {
-            flex: 0 0 clamp(320px, 45vw, 420px);
-            scroll-snap-align: center;
-            padding: 2.5rem;
-            background: var(--cream-dark);
-            border: 1px solid rgba(18, 14, 11, 0.08);
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(18, 14, 11, 0.06);
-            transition: all 0.3s ease;
-        }
-
-        .review-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(198, 169, 107, 0.15);
-            border-color: var(--gold);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(18, 14, 11, 0.1);
-        }
-
-        .review-author {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .review-stars {
-            color: var(--gold);
-        }
-
-        .review-text {
-            color: var(--brown);
-            line-height: 1.8;
-        }
-
-        /* Features */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            background: var(--cream-dark);
-            border-radius: 8px;
-            border: 1px solid rgba(18, 14, 11, 0.08);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .feature-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .feature-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(198, 169, 107, 0.15);
-            border-color: var(--gold);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-item h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-item p {
-            color: var(--brown);
-            font-size: 0.95rem;
-        }
-
-        /* Location */
-        .location-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: clamp(3rem, 6vw, 6rem);
-            align-items: start;
-        }
-
-        .location-info {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .location-info.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .location-info h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .location-details {
-            margin-bottom: 2.5rem;
-        }
-
-        .location-details p {
-            margin-bottom: 1rem;
-            color: var(--brown);
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-
-        .location-details strong {
-            display: block;
-            margin-top: 2rem;
-            color: var(--gold);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .map-wrap {
-            height: 500px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(18, 14, 11, 0.08);
-            box-shadow: 0 10px 40px rgba(18, 14, 11, 0.1);
-            opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .map-wrap.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .map-wrap iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--espresso), var(--brown));
-            color: var(--cream);
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: var(--cream-dark);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.8rem;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        .footer-section a:hover {
-            color: var(--gold);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(198, 169, 107, 0.2);
-            color: var(--cream-dark);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .hero,
-            .about-grid,
-            .location-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-image {
-                height: 450px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 75%;
-                max-width: 320px;
-                flex-direction: column;
-                background: var(--cream);
-                padding: 5rem 2rem;
-                box-shadow: -10px 0 40px rgba(18, 14, 11, 0.2);
-                transition: right 0.4s ease;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translate(8px, 8px);
-            }
-
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -7px);
-            }
-
-            .menu-category.active {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café No.41</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:Inter,sans-serif;
+  background:#0e0b09;
+  color:#f5efe7;
+  overflow-x:hidden;
+}
+
+/* LOADER */
+.loader{
+  position:fixed;
+  inset:0;
+  background:#0e0b09;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  font-family:"Playfair Display";
+  font-size:2.5rem;
+  letter-spacing:2px;
+  animation:fadeOut 1.2s ease forwards;
+  animation-delay:1.8s;
+}
+@keyframes fadeOut{
+  to{opacity:0;visibility:hidden;}
+}
+
+/* CANVAS BACKGROUND */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:18px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.4);
+  z-index:100;
+}
+button{
+  background:#c6a96b;
+  border:none;
+  padding:10px 15px;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{transform:scale(1.05);}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+  padding:120px 40px;
+  flex-wrap:wrap;
+}
+.hero-text{
+  max-width:520px;
+}
+.hero h1{
+  font-family:"Playfair Display";
+  font-size:3.8rem;
+  line-height:1.2;
+}
+.hero p{
+  margin:20px 0;
+  opacity:.8;
+}
+.hero img{
+  width:480px;
+  max-width:100%;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.2);
+  transition:.5s;
+}
+.hero img:hover{transform:scale(1.05);}
+
+/* SECTIONS */
+section{
+  padding:90px 30px;
+  max-width:1200px;
+  margin:auto;
+}
+h2{
+  font-family:"Playfair Display";
+  margin-bottom:40px;
+  font-size:2.2rem;
+}
+
+/* GALLERY LOOP */
+.gallery{
+  overflow:hidden;
+}
+.gallery-track{
+  display:flex;
+  gap:20px;
+  animation:scroll 30s linear infinite;
+}
+.gallery img{
+  width:300px;
+  height:200px;
+  object-fit:cover;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.2);
+}
+@keyframes scroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* MENU */
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+.menu-item{
+  background:linear-gradient(145deg,#1c1510,#120e0b);
+  padding:20px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:.3s;
+}
+.menu-item:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* REVIEWS */
+.reviews{
+  overflow:hidden;
+}
+.reviews-track{
+  display:flex;
+  gap:20px;
+  animation:scroll 35s linear infinite;
+}
+.review{
+  min-width:260px;
+  background:#1a140f;
+  padding:20px;
+  border-radius:10px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.hero{flex-direction:column;text-align:center;}
+.hero h1{font-size:2.5rem;}
+}
+
+/* DARK MODE */
+.dark{
+  background:#000;
+  color:#fff;
+}
+</style>
 </head>
+
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo">Café No.41</div>
-    </div>
 
-    <div class="bg-layer"></div>
-    <div class="particles" id="particles"></div>
+<div class="loader">Café No.41</div>
 
-    <nav id="nav">
-        <div class="nav-container">
-            <div class="logo">Café No.41</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#location">Visit</a></li>
-            </ul>
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                <button class="theme-toggle" id="themeToggle">☀️</button>
-                <button class="menu-toggle" id="menuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </nav>
+<canvas id="bg"></canvas>
 
-    <section class="hero">
-        <div class="container" style="display: contents;">
-            <div class="hero-content">
-                <h1>Café No.41</h1>
-                <p class="hero-subtitle">East Barnet Village</p>
-                <p class="hero-description">A warm, welcoming space where quality coffee meets genuine hospitality. Fresh food made daily, expertly brewed coffee, and a community that feels like home.</p>
-                <div class="cta-group">
-                    <a href="#location" class="btn btn-primary">Visit Us</a>
-                    <a href="#menu" class="btn btn-secondary">View Menu</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://i.ibb.co/n9kHT5q/7.png" alt="Café No.41" loading="eager" onerror="this.onerror=null; this.src='https://i.ibb.co/T9Yz6yV/8.png';">
-            </div>
-        </div>
-    </section>
+<nav>
+<div>Café No.41</div>
+<button onclick="toggleDark()">Dark</button>
+</nav>
 
-    <section class="about" id="about">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-eyebrow">Our Story</div>
-                <h2 class="section-title">More Than Just Coffee</h2>
-            </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>Café No.41 is a locally loved gathering spot in the heart of East Barnet Village. We believe in simplicity done right—premium ingredients, skilled preparation, and genuine hospitality.</p>
-                    <p>From early morning commuters to friends meeting for brunch, we're here to fuel your day with quality, warmth, and care.</p>
-                    <p>Open Monday to Saturday from 6:15am to 5pm, we're proud to be part of your daily routine.</p>
-                </div>
-                <div class="about-features">
-                    <div class="feature-box">
-                        <h3>Premium Coffee</h3>
-                        <p>Expertly brewed to perfection</p>
-                    </div>
-                    <div class="feature-box">
-                        <h3>Fresh Food Daily</h3>
-                        <p>Made fresh every morning</p>
-                    </div>
-                    <div class="feature-box">
-                        <h3>Community First</h3>
-                        <p>Serving East Barnet for years</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero">
+<div class="hero-text">
+<h1>Cosy Coffee & Breakfast ☕</h1>
+<p>Experience warm, fresh food and premium coffee in the heart of East Barnet.</p>
+<button>Visit Us</button>
+</div>
 
-    <section class="menu" id="menu">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-eyebrow">What We Serve</div>
-                <h2 class="section-title">Our Menu</h2>
-            </div>
-            <div class="menu-nav">
-                <button class="menu-btn active" data-cat="breakfast">🍳 Breakfast</button>
-                <button class="menu-btn" data-cat="toast">🍞 On Toast</button>
-                <button class="menu-btn" data-cat="sweet">🥞 Sweet</button>
-                <button class="menu-btn" data-cat="healthy">🥗 Healthy</button>
-                <button class="menu-btn" data-cat="sourdough">🥑 Sourdough</button>
-                <button class="menu-btn" data-cat="omelettes">🍳 Omelettes</button>
-                <button class="menu-btn" data-cat="sandwiches">🥪 Sandwiches</button>
-                <button class="menu-btn" data-cat="paninis">🥖 Paninis</button>
-                <button class="menu-btn" data-cat="wraps">🌯 Wraps</button>
-            </div>
+<img src="https://i.ibb.co/n9kHT5q/7.png"
+onerror="this.src='https://i.ibb.co/pBBPry3M/1.png'">
+</section>
 
-            <div class="menu-category active" data-cat="breakfast">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Old School</span><span class="menu-item-price">£9.50</span></div><div class="menu-item-desc">Classic breakfast done right</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Classic</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-desc">Traditional full English</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Classic 41</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-desc">Our signature breakfast</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Hangover</span><span class="menu-item-price">£11.50</span></div><div class="menu-item-desc">Everything you need</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Big 41</span><span class="menu-item-price">£12.50</span></div><div class="menu-item-desc">Our biggest challenge</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Turkish Breakfast</span><span class="menu-item-price">£12.00</span></div><div class="menu-item-desc">Mediterranean feast</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mediterranean</span><span class="menu-item-price">£12.00</span></div><div class="menu-item-desc">Fresh Med flavours</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegetarian</span><span class="menu-item-price">£11.00</span></div><div class="menu-item-desc">Plant-based perfection</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegetarian Special</span><span class="menu-item-price">£12.00</span></div><div class="menu-item-desc">Elevated veggie</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vegan Dream</span><span class="menu-item-price">£11.00</span></div><div class="menu-item-desc">100% plant-based</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Halal</span><span class="menu-item-price">£13.00</span></div><div class="menu-item-desc">Premium halal spread</div></div>
-            </div>
+<section>
+<h2>Gallery</h2>
+<div class="gallery">
+<div class="gallery-track">
+<img src="https://i.ibb.co/7drxF5R9/1.png">
+<img src="https://i.ibb.co/5wpftRv/2.png">
+<img src="https://i.ibb.co/CphF6P3Y/3.png">
+<img src="https://i.ibb.co/FRb1rbj/5.png">
+<img src="https://i.ibb.co/Ng3dj4nQ/6.png">
+<img src="https://i.ibb.co/TqRQvzHv/8.png">
+<img src="https://i.ibb.co/7drxF5R9/1.png">
+<img src="https://i.ibb.co/5wpftRv/2.png">
+</div>
+</div>
+</section>
 
-            <div class="menu-category" data-cat="toast">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Beans</span><span class="menu-item-price">£4.90</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Cheese</span><span class="menu-item-price">£4.90</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Scrambled Egg</span><span class="menu-item-price">£4.90</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Poached Egg</span><span class="menu-item-price">£4.90</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Jam / Honey</span><span class="menu-item-price">£3.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tea Cake</span><span class="menu-item-price">£4.00</span></div></div>
-            </div>
+<section>
+<h2>Menu</h2>
+<div class="menu">
+<div class="menu-item">Classic Breakfast – £10 🍳</div>
+<div class="menu-item">Turkish Breakfast – £12 🇹🇷</div>
+<div class="menu-item">Avocado Sourdough – £9.70 🥑</div>
+<div class="menu-item">Chicken Wrap – £8.50 🌯</div>
+<div class="menu-item">Latte – £2.50 ☕</div>
+<div class="menu-item">Pancakes – £11.90 🥞</div>
+</div>
+</section>
 
-            <div class="menu-category" data-cat="sweet">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">American Pancakes</span><span class="menu-item-price">£11.90</span></div><div class="menu-item-desc">Fluffy stacks</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Pancake Stack</span><span class="menu-item-price">£11.90</span></div><div class="menu-item-desc">Loaded tower</div></div>
-            </div>
+<section>
+<h2>Reviews</h2>
+<div class="reviews">
+<div class="reviews-track">
+<div class="review">Best breakfast in Barnet ⭐⭐⭐⭐⭐</div>
+<div class="review">Amazing coffee and vibe ⭐⭐⭐⭐⭐</div>
+<div class="review">Super cosy place ⭐⭐⭐⭐⭐</div>
+<div class="review">Always come back ⭐⭐⭐⭐⭐</div>
+</div>
+</div>
+</section>
 
-            <div class="menu-category" data-cat="healthy">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Porridge</span><span class="menu-item-price">£7.50</span></div><div class="menu-item-desc">Warming oats</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Granola</span><span class="menu-item-price">£7.50</span></div><div class="menu-item-desc">Crunchy goodness</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">French Toast / Pancakes</span><span class="menu-item-price">£9.50</span></div><div class="menu-item-desc">Sweet morning treat</div></div>
-            </div>
+<section>
+<h2>Visit Us</h2>
+<p>41 Church Hill Rd, Barnet EN4 8SY</p>
+<p>0208 333 2204</p>
+</section>
 
-            <div class="menu-category" data-cat="sourdough">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Avocado Special</span><span class="menu-item-price">£9.70</span></div><div class="menu-item-desc">Smashed avo perfection</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Eggs Florentine</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-desc">Poached eggs with spinach</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Eggs Benedict</span><span class="menu-item-price">£10.00</span></div><div class="menu-item-desc">Classic brunch</div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Eggs Royale</span><span class="menu-item-price">£10.50</span></div><div class="menu-item-desc">With smoked salmon</div></div>
-            </div>
+<script>
 
-            <div class="menu-category" data-cat="omelettes">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Plain</span><span class="menu-item-price">£7.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">1 Filling</span><span class="menu-item-price">£8.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">2 Fillings</span><span class="menu-item-price">£9.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">3 Fillings</span><span class="menu-item-price">£10.50</span></div></div>
-            </div>
+/* DARK MODE */
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
 
-            <div class="menu-category" data-cat="sandwiches">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Cheese & Tomato</span><span class="menu-item-price">£3.90</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Ham Salad</span><span class="menu-item-price">£4.00</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tuna Mayo</span><span class="menu-item-price">£4.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Egg Mayo</span><span class="menu-item-price">£4.00</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">BLT</span><span class="menu-item-price">£4.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Salt Beef</span><span class="menu-item-price">£6.80</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Egg & Bacon</span><span class="menu-item-price">£4.80</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Bacon Avocado</span><span class="menu-item-price">£5.70</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Smoked Salmon</span><span class="menu-item-price">£6.50</span></div></div>
-            </div>
+/* PARTICLES */
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-            <div class="menu-category" data-cat="paninis">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Ham & Cheese</span><span class="menu-item-price">£5.40</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Tuna Mayo</span><span class="menu-item-price">£5.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Escalope</span><span class="menu-item-price">£7.00</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mozzarella & Avocado</span><span class="menu-item-price">£6.80</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Halloumi</span><span class="menu-item-price">£6.80</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Breakfast Panini</span><span class="menu-item-price">£8.00</span></div></div>
-            </div>
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+dx:(Math.random()-0.5)*0.3,
+dy:(Math.random()-0.5)*0.3
+});
+}
 
-            <div class="menu-category" data-cat="wraps">
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Shish</span><span class="menu-item-price">£8.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Kofte</span><span class="menu-item-price">£8.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Falafel</span><span class="menu-item-price">£8.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chicken Escalope</span><span class="menu-item-price">£8.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Halloumi</span><span class="menu-item-price">£8.50</span></div></div>
-                <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Breakfast Wrap</span><span class="menu-item-price">£8.50</span></div></div>
-            </div>
-        </div>
-    </section>
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="rgba(255,255,255,0.2)";
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
 
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-eyebrow">Atmosphere</div>
-                <h2 class="section-title">A Space That Feels Like Home</h2>
-            </div>
-        </div>
-        <div class="gallery-scroll">
-            <div class="gallery-item"><img src="https://i.ibb.co/7drxF5R/1.png" alt="Interior" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/pBBPry3/1.png';"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co/5wpftRv/2.png" alt="Counter" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/pBBPry3/1.png';"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co/CphF6P3/3.png" alt="Food" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/rKM0pGK/3.png';"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co/FRb1rbj/5.png" alt="Breakfast" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/pBBPry3/1.png';"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co/Ng3dj4n/6.png" alt="Corner" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/tMdk4dP/6.png';"></div>
-            <div class="gallery-item"><img src="https://i.ibb.co/TqRQvzH/8.png" alt="Atmosphere" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/T9Yz6yV/8.png';"></div>
-        </div>
-    </section>
+</script>
 
-    <section class="reviews">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-eyebrow">Testimonials</div>
-                <h2 class="section-title">What Our Customers Say</h2>
-            </div>
-        </div>
-        <div class="reviews-scroll">
-            <div class="review-card"><div class="review-header"><div class="review-author">Emma Richardson</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Best breakfast spot in Barnet, always fresh and friendly. The full English is unbeatable and the atmosphere is perfect."</p></div>
-            <div class="review-card"><div class="review-header"><div class="review-author">James Carter</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Coffee is amazing and the vibe is super cosy. Perfect spot to start the day or catch up with friends."</p></div>
-            <div class="review-card"><div class="review-header"><div class="review-author">Sarah Phillips</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Perfect place to work and relax. Great WiFi, comfortable seating, and the staff always remember your order."</p></div>
-            <div class="review-card"><div class="review-header"><div class="review-author">David Thompson</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Incredible quality for the price. Everything is freshly made and you can taste the care in every dish."</p></div>
-            <div class="review-card"><div class="review-header"><div class="review-author">Lisa Morgan</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"A true neighbourhood gem. The staff are genuinely lovely and the food is consistently excellent."</p></div>
-            <div class="review-card"><div class="review-header"><div class="review-author">Michael Bennett</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div><p class="review-text">"Best café in East Barnet without a doubt. Great atmosphere, quality food, and always welcoming."</p></div>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-eyebrow">What We Offer</div>
-                <h2 class="section-title">More Than Just Great Coffee</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item"><span class="feature-icon">📶</span><h3>Free WiFi</h3><p>Fast connection</p></div>
-                <div class="feature-item"><span class="feature-icon">☕</span><h3>Premium Coffee</h3><p>Expertly brewed</p></div>
-                <div class="feature-item"><span class="feature-icon">🍳</span><h3>Fresh Food</h3><p>Made daily</p></div>
-                <div class="feature-item"><span class="feature-icon">🚗</span><h3>Easy Parking</h3><p>Convenient</p></div>
-                <div class="feature-item"><span class="feature-icon">🐶</span><h3>Dog Friendly</h3><p>Pets welcome</p></div>
-                <div class="feature-item"><span class="feature-icon">💳</span><h3>Card Payments</h3><p>Contactless</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="location" id="location">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-eyebrow">Find Us</div>
-                <h2 class="section-title">Visit Us Today</h2>
-            </div>
-            <div class="location-grid">
-                <div class="location-info">
-                    <h3>Location & Hours</h3>
-                    <div class="location-details">
-                        <p><strong>Address</strong><br>41 Church Hill Rd<br>East Barnet Village<br>London, Barnet<br>EN4 8SY</p>
-                        <p><strong>Phone</strong><br>020 8333 2204</p>
-                        <p><strong>Opening Hours</strong><br>Monday - Saturday: 6:15am - 5:00pm<br>Sunday: Closed</p>
-                    </div>
-                    <a href="tel:02083332204" class="btn btn-primary">Call Us</a>
-                </div>
-                <div class="map-wrap">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2474.7777!2d-0.1656!3d51.6445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDM4JzQwLjIiTiAwwrAwOSc1Ni4yIlc!5e0!3m2!1sen!2suk" allowfullscreen loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>Café No.41</h4>
-                    <p>Your neighbourhood café serving quality coffee, fresh food, and genuine hospitality in East Barnet Village.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="#about">About</a>
-                    <a href="#menu">Menu</a>
-                    <a href="#gallery">Gallery</a>
-                    <a href="#location">Visit</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Hours</h4>
-                    <p>Monday - Saturday<br>6:15am - 5:00pm<br><br>Sunday<br>Closed</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>41 Church Hill Rd<br>East Barnet, EN4 8SY<br><br>020 8333 2204</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2024 Café No.41. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Loading Screen
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-            }, 2000);
-        });
-
-        // Particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 40; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 35 + 30) + 's';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Navigation
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Mobile Menu
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Dark Mode
-        const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeToggle.textContent = '🌙';
-        }
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            themeToggle.textContent = isDark ? '🌙' : '☀️';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-
-        // Menu Navigation
-        const menuBtns = document.querySelectorAll('.menu-btn');
-        const menuCategories = document.querySelectorAll('.menu-category');
-        menuBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const cat = btn.dataset.cat;
-                menuBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                menuCategories.forEach(category => {
-                    if (category.dataset.cat === cat) {
-                        category.classList.add('active');
-                    } else {
-                        category.classList.remove('active');
-                    }
-                });
-            });
-        });
-
-        // Intersection Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -80px 0px'
-        });
-
-        document.querySelectorAll('.section-header, .about-text, .about-features, .feature-item, .location-info, .map-wrap').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Feature Items Stagger Animation
-        const featureItems = document.querySelectorAll('.feature-item');
-        const featureObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 100);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        featureItems.forEach(item => featureObserver.observe(item));
-    </script>
 </body>
 </html>
